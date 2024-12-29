@@ -1,14 +1,30 @@
 from flask import Blueprint, request, jsonify
+from . import calculations as calc
 
 bp = Blueprint('api', __name__)
 
-@bp.route('/calculate', methods=['POST'])
-def calculate():
+@bp.route('/numbers', methods=['POST'])
+def numbers():
     data = request.get_json()
     input_value = data.get('input')
+    calculation_type = data.get('type')
 
     if input_value is None:
         return jsonify({'error': 'input is required'}), 400
     
-    result = input_value * 2
+    if calculation_type is None:
+        return jsonify({'error': 'type is required'}), 400
+    
+    try:
+        input_int = int(input_value)
+    except ValueError:
+        raise ValueError(f'Could not convert "{input_value}" to an integer')
+    
+    try:
+        result = calc.calculate(input_int, calculation_type)
+    except ValueError as e:
+        return jsonify({'error': str(e)}), 400
+    except Exception as e:
+        return jsonify({'error': f'Internal server error: {str(e)}'}), 500
+    
     return jsonify({'result': result})
