@@ -2,7 +2,7 @@ from typing import Tuple
 from random import sample
 
 from menu_helpers import old_or_new_ints, old_or_new_list, what_next
-import RSA_calculations as rsacalc
+import backend.old.RSA_calculations as rsacalc
 
 
 def generate_primes_option() -> Tuple[int, int, str]:
