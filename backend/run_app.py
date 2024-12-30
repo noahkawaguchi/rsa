@@ -1,9 +1,11 @@
-from flask import Blueprint, request, jsonify
-from . import calculations as calc
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+import calculations as calc
 
-bp = Blueprint('api', __name__)
+app = Flask(__name__)
+CORS(app)
 
-@bp.route('/numbers', methods=['POST'])
+@app.route('/numbers', methods=['POST'])
 def numbers():
     data = request.get_json()
     input_value = data.get('input')
@@ -28,3 +30,6 @@ def numbers():
         return jsonify({'error': f'Internal server error: {str(e)}'}), 500
     
     return jsonify({'result': result})
+
+if __name__ == '__main__':
+    app.run(debug=True)
