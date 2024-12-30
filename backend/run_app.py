@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import calculations as calc
+from calculations import calculate
 
 app = Flask(__name__)
 CORS(app)
@@ -23,7 +23,7 @@ def numbers():
         raise ValueError(f'Could not convert "{input_value}" to an integer')
     
     try:
-        result = calc.calculate(input_int, calculation_type)
+        result = calculate(input_int, calculation_type)
     except ValueError as e:
         return jsonify({'error': str(e)}), 400
     except Exception as e:
