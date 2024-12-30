@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useBackendCalculation } from '../hooks/useBackendCalculation';
 
 interface GenerateKeysProps {
@@ -8,6 +8,10 @@ interface GenerateKeysProps {
 
 const GenerateKeys: React.FC<GenerateKeysProps> = ({ p, q }) => {
   const { data, error, loading, requestCalculation } = useBackendCalculation();
+
+  useEffect(() => {
+    requestCalculation([p, q], 'keys');
+  }, [p, q, requestCalculation]);
 
   if (error) return <p>Error: {error.message}</p>;
   if (loading) return <p>Loading...</p>;
@@ -19,9 +23,12 @@ const GenerateKeys: React.FC<GenerateKeysProps> = ({ p, q }) => {
         <br />
         Generate Keys
       </h4>
-      <p>
-        p: {p}, q: {q}
-      </p>
+      {data && (
+        <p>
+          Your public key (n, e) is ({data[0]}, {data[1]}) <br />
+          Your private key (n, d) is ({data[0]}, {data[2]})
+        </p>
+      )}
     </div>
   );
 };

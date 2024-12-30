@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from calculations import calculate
+from calculations.calculate import calculate
 
 app = Flask(__name__)
 CORS(app)
@@ -19,7 +19,7 @@ def numbers():
         
     try:
         result = calculate(input_value, calculation_type)
-    except ValueError as e:
+    except (ValueError, TypeError) as e:
         return jsonify({'error': str(e)}), 400
     except Exception as e:
         return jsonify({'error': f'Internal server error: {str(e)}'}), 500

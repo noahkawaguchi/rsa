@@ -1,5 +1,13 @@
-from random import sample
 from typing import Tuple
+from random import sample
+
+def validate_pos_ints(**kwargs: any) -> None:
+    """Raise an error if kwargs are not all positive integers."""
+    for name, value in kwargs.items():
+        if not isinstance(value, int):
+            raise TypeError(f'{name} must be an integer')
+        if value <= 0:
+            raise ValueError(f'{name} must be positive')
 
 def generate_primes(full_unicode: bool) -> Tuple[int, int]:
     """Depending on whether the user will need ASCII or Unicode,

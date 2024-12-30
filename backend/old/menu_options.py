@@ -2,7 +2,7 @@ from typing import Tuple
 from random import sample
 
 from menu_helpers import old_or_new_ints, old_or_new_list, what_next
-import backend.old.RSA_calculations as rsacalc
+from . import RSA_calculations as rsacalc
 
 
 def generate_primes_option() -> Tuple[int, int, str]:
@@ -107,8 +107,8 @@ def generate_keys_option(
     print("We'll start with two prime numbers.")
     print()
     p, q = old_or_new_ints(('p', 'q'), (old_p, old_q))
-    n, e = rsacalc.Find_Public_Key_e(p, q)
-    d = rsacalc.Find_Private_Key_d(e, p, q)
+    n, e = rsacalc.find_public_key(p, q)
+    d = rsacalc.find_private_key(e, p, q)
     print()
     print(f'*** Your public key (n, e) is ({n}, {e}).')
     print(f'*** Your private key (n, d) is ({n}, {d}).')
@@ -127,7 +127,7 @@ def encode_option(old_n: int, old_e: int) -> Tuple[list, str]:
     print()
     n, e = old_or_new_ints(('n', 'e'), (old_n, old_e))
     M = input('Enter your message to be encoded: ')
-    C = rsacalc.Encode(n, e, M)
+    C = rsacalc.encode(n, e, M)
     print()
     print('*** Your encoded message is:', C)
     direction = what_next('4') # Decode is option 4 on the main menu.
@@ -147,7 +147,7 @@ def decode_option(old_n: int, old_d: int, old_C: list) -> str:
     print()
     print('Now for the ciphertext!')
     C = old_or_new_list('the ciphertext', old_C)
-    M = rsacalc.Decode(n, d, C)
+    M = rsacalc.decode(n, d, C)
     print()
     print('*** Your decoded message is:', M)
     direction = what_next('5') # Break codes is option 5 on the main menu.
