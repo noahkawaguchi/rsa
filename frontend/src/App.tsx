@@ -1,11 +1,12 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './App.css';
 import { RSAState } from './types';
 import Header from './components/Header';
 import GeneratePrimes from './components/GeneratePrimes';
+import MyComponent from './components/MyComponent';
 
-const App: React.FC = (): React.JSX.Element => {
+const App: React.FC = () => {
   const [appState, setAppState] = useState<RSAState>({
     p: 0,
     q: 0,
@@ -15,13 +16,23 @@ const App: React.FC = (): React.JSX.Element => {
     C: [0],
   });
 
+  const setPrimes = (p: number, q: number) => {
+    setAppState((prevState) => ({
+      ...prevState,
+      p: p,
+      q: q,
+    }));
+  };
+
   return (
     <>
       <header>
         <Header />
       </header>
       <main>
-        <GeneratePrimes appState={appState} setAppState={setAppState} />
+        <GeneratePrimes setPrimes={setPrimes} />
+        <hr />
+        {appState.p !== 0 && appState.q !== 0 && <MyComponent p={appState.p} q={appState.q} />}
       </main>
     </>
   );
