@@ -1,28 +1,24 @@
 import React from 'react';
 import { useState } from 'react';
 import './App.css';
-import { RSAState } from './types';
+// import { RSAState } from './types';
 import Header from './components/Header';
-import GeneratePrimes from './components/GeneratePrimes';
-import GenerateKeys from './components/GenerateKeys';
+import WriteMessage from './components/WriteMessage';
+
+type Mode = 'welcome' | 'write' | 'read';
 
 const App: React.FC = () => {
-  const [appState, setAppState] = useState<RSAState>({
-    p: 0,
-    q: 0,
-    n: 0,
-    e: 0,
-    d: 0,
-    C: [0],
-  });
+  const [mode, setMode] = useState<Mode>('welcome');
+  // const [appState, setAppState] = useState<RSAState>({
+  //   p: 0,
+  //   q: 0,
+  //   n: 0,
+  //   e: 0,
+  //   d: 0,
+  //   C: [0],
+  // });
 
-  const setPrimes = (p: number, q: number) => {
-    setAppState((prevState) => ({
-      ...prevState,
-      p: p,
-      q: q,
-    }));
-  };
+  const handleButtonClick = (mode: Mode) => setMode(mode);
 
   return (
     <>
@@ -30,9 +26,15 @@ const App: React.FC = () => {
         <Header />
       </header>
       <main>
-        <GeneratePrimes setPrimes={setPrimes} />
-        <hr />
-        {appState.p !== 0 && appState.q !== 0 && <GenerateKeys p={appState.p} q={appState.q} />}
+        {mode === 'welcome' && (
+          <>
+            <button onClick={() => handleButtonClick('write')}>Write Message</button>
+            <button onClick={() => handleButtonClick('read')}>Read Message</button>
+          </>
+        )}
+        {mode === 'write' && <WriteMessage />}
+        {mode === 'read' && <p>[read will go here]</p>}
+        {mode !== 'welcome' && <button onClick={() => handleButtonClick('welcome')}>Back</button>}
       </main>
     </>
   );

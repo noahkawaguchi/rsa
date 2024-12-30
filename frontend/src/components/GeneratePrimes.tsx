@@ -3,16 +3,16 @@ import { useState } from 'react';
 import { useBackendCalculation } from '../hooks/useBackendCalculation';
 
 interface GeneratePrimesProps {
-  setPrimes(p: number, q: number): void;
+  updatePrimes(p: number, q: number): void;
 }
 
-const GeneratePrimes: React.FC<GeneratePrimesProps> = ({ setPrimes }) => {
+const GeneratePrimes: React.FC<GeneratePrimesProps> = ({ updatePrimes }) => {
   const [hasChosen, setHasChosen] = useState(false);
   const { data, error, loading, requestCalculation } = useBackendCalculation();
 
   const unicodeChoice = async (choice: 'ascii' | 'unicode') => {
     await requestCalculation(choice, 'primes', (data) => {
-      setPrimes(data[0], data[1]);
+      updatePrimes(data[0], data[1]);
     });
     setHasChosen(true);
   };
