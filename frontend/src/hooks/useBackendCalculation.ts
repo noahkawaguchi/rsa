@@ -1,31 +1,23 @@
 import { useState, useCallback } from 'react';
 import axios from 'axios';
+import { CalculationRequest, CalculationResponse } from '../types';
 
 const API_URL = 'http://127.0.0.1:5000/numbers';
 
-interface RSAResponse {
-  result?: Array<number>;
-  error?: string;
-}
-
 export const useBackendCalculation = () => {
-  const [data, setData] = useState<Array<number> | null>(null);
+  const [data, setData] = useState<CalculationResponse | null>(null);
   const [error, setError] = useState<Error | null>(null);
   const [loading, setLoading] = useState(false);
 
   const requestCalculation = useCallback(
-    async (
-      input: string | Array<number>,
-      type: string,
-      callback?: (data: Array<number>) => void
-    ) => {
+    async (request: CalculationRequest, callback?: (data: CalculationResponse) => void) => {
       setLoading(true);
       axios
-        .post<RSAResponse>(API_URL, { input: input, type: type })
+        .post<CalculationResponse>(API_URL, request)
         .then((response) => {
-          if (response.data.result) {
-            setData(response.data.result);
-            if (callback) callback(response.data.result);
+          if (response.data) {
+            setData(response.data);
+            if (callback) callback(response.data);
           }
         })
         .catch((error) => {

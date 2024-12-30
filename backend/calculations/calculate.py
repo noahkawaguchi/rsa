@@ -2,27 +2,30 @@ from typing import List
 from . import RSA_calculations as rsa
 from .utils import generate_primes
 
-def calculate(input_value: any, calculation_type: str) -> List[int]:
-    """Perform the requested calculation on the given inputs.
+def calculate(data: dict) -> dict:
+    """Perform the requested calculation on the given input(s).
     If impossible, raise an error.
     """
-    match (calculation_type):
+    match (data['type']):
         case 'primes':
-            if input_value == 'ascii':
-                return list(generate_primes(full_unicode=False))
-            elif input_value == 'unicode':
-                return list(generate_primes(full_unicode=True))
+            if data['choice'] == 'ascii':
+                p, q = generate_primes(full_unicode=False)
+                return {'p': p, 'q': q}
+            elif data['choice'] == 'unicode':
+                p, q = generate_primes(full_unicode=True)
+                return {'p': p, 'q': q}
             else:
-                raise ValueError('Input value for primes option must '
-                                 'be either "ascii" or "unicode"')
+                raise ValueError('Input for primes calculation must be an '
+                                 'object/dict with key "choice" and value '
+                                 '"ascii" or "unicode"')
         case 'keys':
             try:
-                n, e = rsa.find_public_key(p=input_value[0], q=input_value[1])
-                d = rsa.find_private_key(e=e, p=input_value[0], q=input_value[1])
-                return [n, e, d]
-            except TypeError as e:
-                raise TypeError('Input value for keys option must be '
-                                'an array of two primes p and q')
+                n, e = rsa.find_public_key(p=data['p'], q=data['q'])
+                d = rsa.find_private_key(e=e, p=data['p'], q=data['q'])
+                return {'n': n, 'e': e, 'd': d}
+            except (TypeError, KeyError) as e:
+                raise TypeError('Input for keys calculation must be an '
+                                'object/dict of two primes with keys p and q')
         case _:
             raise ValueError(f'Unsupported calculation type: '
                              '{calculation_type}')

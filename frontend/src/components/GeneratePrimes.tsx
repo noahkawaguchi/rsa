@@ -1,9 +1,10 @@
 import React from 'react';
 import { useState } from 'react';
 import { useBackendCalculation } from '../hooks/useBackendCalculation';
+import { Primes } from '../types';
 
 interface GeneratePrimesProps {
-  updatePrimes(p: number, q: number): void;
+  updatePrimes(primes: Primes): void;
 }
 
 const GeneratePrimes: React.FC<GeneratePrimesProps> = ({ updatePrimes }) => {
@@ -11,8 +12,10 @@ const GeneratePrimes: React.FC<GeneratePrimesProps> = ({ updatePrimes }) => {
   const { data, error, loading, requestCalculation } = useBackendCalculation();
 
   const unicodeChoice = async (choice: 'ascii' | 'unicode') => {
-    await requestCalculation(choice, 'primes', (data) => {
-      updatePrimes(data[0], data[1]);
+    await requestCalculation({ type: 'primes', choice: choice }, (data) => {
+      if (data.type === 'primes' && data.result) {
+        updatePrimes({ p: data.result.p, q: data.result.q });
+      }
     });
     setHasChosen(true);
   };
@@ -32,12 +35,14 @@ const GeneratePrimes: React.FC<GeneratePrimesProps> = ({ updatePrimes }) => {
           <p>My secret message will contain...</p>
           <button onClick={() => unicodeChoice('ascii')}>ASCII only</button>
           <button onClick={() => unicodeChoice('unicode')}>Unicode symbols</button>
-          <p>(If you're not sure, choose Unicode)</p>
+          <p>(If you're unsure, choose Unicode)</p>
         </div>
       ) : (
-        data && (
+        data &&
+        data.type === 'primes' &&
+        data.result && (
           <p>
-            Your primes p and q are {data[0]} and {data[1]}
+            Your primes p and q are {data.result.p} and {data.result.q}
           </p>
         )
       )}

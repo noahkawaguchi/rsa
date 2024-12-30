@@ -1,16 +1,12 @@
 import React, { useEffect } from 'react';
 import { useBackendCalculation } from '../hooks/useBackendCalculation';
+import { Primes } from '../types';
 
-interface GenerateKeysProps {
-  p: number;
-  q: number;
-}
-
-const GenerateKeys: React.FC<GenerateKeysProps> = ({ p, q }) => {
+const GenerateKeys: React.FC<Primes> = ({ p, q }) => {
   const { data, error, loading, requestCalculation } = useBackendCalculation();
 
   useEffect(() => {
-    requestCalculation([p, q], 'keys');
+    requestCalculation({ type: 'keys', p: p, q: q });
   }, [p, q, requestCalculation]);
 
   if (error) return <p>Error: {error.message}</p>;
@@ -23,10 +19,10 @@ const GenerateKeys: React.FC<GenerateKeysProps> = ({ p, q }) => {
         <br />
         Generate Keys
       </h4>
-      {data && (
+      {data && data.type === 'keys' && data.result && (
         <p>
-          Your public key (n, e) is ({data[0]}, {data[1]}) <br />
-          Your private key (n, d) is ({data[0]}, {data[2]})
+          Your public key (n, e) is ({data.result.n}, {data.result.e}) <br />
+          Your private key (n, d) is ({data.result.n}, {data.result.d})
         </p>
       )}
     </div>

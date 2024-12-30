@@ -8,23 +8,20 @@ CORS(app)
 @app.route('/numbers', methods=['POST'])
 def numbers():
     data = request.get_json()
-    input_value = data.get('input')
-    calculation_type = data.get('type')
-
-    if input_value is None:
-        return jsonify({'error': 'input is required'}), 400
+    calc_type = data.get('type')
     
-    if calculation_type is None:
-        return jsonify({'error': 'type is required'}), 400
+    if calc_type is None:
+        return jsonify({'type': calc_type, 'error': 'type is required'}), 400
         
     try:
-        result = calculate(input_value, calculation_type)
-    except (ValueError, TypeError) as e:
-        return jsonify({'error': str(e)}), 400
+        result = calculate(data)
+    except (ValueError, TypeError, KeyError) as e:
+        return jsonify({'type': calc_type, 'error': str(e)}), 400
     except Exception as e:
-        return jsonify({'error': f'Internal server error: {str(e)}'}), 500
+        return jsonify({'type': calc_type, 
+                        'error': f'Internal server error: {str(e)}'}), 500
     
-    return jsonify({'result': result})
+    return jsonify({'type': calc_type, 'result': result})
 
 if __name__ == '__main__':
     app.run(debug=True)

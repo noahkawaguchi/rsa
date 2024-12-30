@@ -1,19 +1,15 @@
 import React, { useState } from 'react';
 import GeneratePrimes from './GeneratePrimes';
 import GenerateKeys from './GenerateKeys';
-
-interface PrimesState {
-  p: number;
-  q: number;
-}
+import { Primes } from '../types';
 
 const WriteMessage: React.FC = () => {
-  const [primes, setPrimes] = useState<PrimesState>({ p: 0, q: 0 });
+  const [primes, setPrimes] = useState<Primes>({ p: 0, q: 0 });
 
-  const updatePrimes = (p: number, q: number) => {
+  const updatePrimes = (primes: Primes) => {
     setPrimes({
-      p: p,
-      q: q,
+      p: primes.p,
+      q: primes.q,
     });
   };
 
