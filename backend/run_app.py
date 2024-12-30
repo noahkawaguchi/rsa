@@ -16,14 +16,9 @@ def numbers():
     
     if calculation_type is None:
         return jsonify({'error': 'type is required'}), 400
-    
+        
     try:
-        input_int = int(input_value)
-    except ValueError:
-        raise ValueError(f'Could not convert "{input_value}" to an integer')
-    
-    try:
-        result = calculate(input_int, calculation_type)
+        result = calculate(input_value, calculation_type)
     except ValueError as e:
         return jsonify({'error': str(e)}), 400
     except Exception as e:

@@ -14,7 +14,7 @@ export const useBackendCalculation = () => {
   const [loading, setLoading] = useState(false);
 
   const requestCalculation = async (
-    input: number,
+    input: string | Array<number>,
     type: string,
     callback?: (data: Array<number>) => void
   ) => {

@@ -10,8 +10,8 @@ const GeneratePrimes: React.FC<GeneratePrimesProps> = ({ setPrimes }) => {
   const [hasChosen, setHasChosen] = useState(false);
   const { data, error, loading, requestCalculation } = useBackendCalculation();
 
-  const unicodeChoice = async (userChoseUnicode: boolean) => {
-    await requestCalculation(Number(userChoseUnicode), 'primes', (data) => {
+  const unicodeChoice = async (choice: 'ascii' | 'unicode') => {
+    await requestCalculation(choice, 'primes', (data) => {
       setPrimes(data[0], data[1]);
     });
     setHasChosen(true);
@@ -30,8 +30,8 @@ const GeneratePrimes: React.FC<GeneratePrimesProps> = ({ setPrimes }) => {
       {!hasChosen ? (
         <div>
           <p>My secret message will contain...</p>
-          <button onClick={() => unicodeChoice(false)}>ASCII only</button>
-          <button onClick={() => unicodeChoice(true)}>Unicode symbols</button>
+          <button onClick={() => unicodeChoice('ascii')}>ASCII only</button>
+          <button onClick={() => unicodeChoice('unicode')}>Unicode symbols</button>
           <p>(If you're not sure, choose Unicode)</p>
         </div>
       ) : (

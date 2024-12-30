@@ -4,7 +4,7 @@ import './App.css';
 import { RSAState } from './types';
 import Header from './components/Header';
 import GeneratePrimes from './components/GeneratePrimes';
-import MyComponent from './components/MyComponent';
+import GenerateKeys from './components/GenerateKeys';
 
 const App: React.FC = () => {
   const [appState, setAppState] = useState<RSAState>({
@@ -32,7 +32,7 @@ const App: React.FC = () => {
       <main>
         <GeneratePrimes setPrimes={setPrimes} />
         <hr />
-        {appState.p !== 0 && appState.q !== 0 && <MyComponent p={appState.p} q={appState.q} />}
+        {appState.p !== 0 && appState.q !== 0 && <GenerateKeys p={appState.p} q={appState.q} />}
       </main>
     </>
   );
