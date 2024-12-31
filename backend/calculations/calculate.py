@@ -2,6 +2,7 @@ from typing import List
 from . import RSA_calculations as rsa
 from .utils import generate_primes
 
+
 def calculate(data: dict) -> dict:
     """Perform the requested calculation on the given input(s).
     If impossible, raise an error.
