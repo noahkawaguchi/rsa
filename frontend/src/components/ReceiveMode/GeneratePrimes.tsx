@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
-import { useBackendCalculation } from '../hooks/useBackendCalculation';
-import { Primes } from '../types';
+import { useBackendCalculation } from '../../hooks/useBackendCalculation';
+import { Primes } from '../../types';
 
 interface GeneratePrimesProps {
   updatePrimes(primes: Primes): void;

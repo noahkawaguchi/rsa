@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { PrivateKey } from '../types';
+import { PrivateKey } from '../../types';
 import EnterPrivateKey from './EnterPrivateKey';
 import Decode from './Decode';
 

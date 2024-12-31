@@ -2,9 +2,9 @@ import React from 'react';
 import { useState } from 'react';
 import './App.css';
 import Header from './components/Header';
-import ReceiveMessage from './components/ReceiveMessage';
-import WriteMessage from './components/WriteMessage';
-import ReadMessage from './components/ReadMessage';
+import ReceiveMessage from './components/ReceiveMode/ReceiveMessage';
+import WriteMessage from './components/WriteMode/WriteMessage';
+import ReadMessage from './components/ReadMode/ReadMessage';
 
 type Mode = 'welcome' | 'receive' | 'write' | 'read';
 

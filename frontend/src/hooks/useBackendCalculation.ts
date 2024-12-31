@@ -2,18 +2,34 @@ import { useState, useCallback } from 'react';
 import axios from 'axios';
 import { CalculationRequest, CalculationResponse } from '../types';
 
-const API_URL = 'http://127.0.0.1:5000/numbers';
+const API_address = 'http://127.0.0.1:5000/calculate';
 
+/**
+ * Custom hook that handles API requests.
+ * @returns
+ *    - Response status, data, and request function:
+ *        `{ data, error, loading, requestCalculation }`.
+ *    - See `requestCalculation`'s docstring for more.
+ */
 export const useBackendCalculation = () => {
   const [data, setData] = useState<CalculationResponse | null>(null);
   const [error, setError] = useState<Error | null>(null);
   const [loading, setLoading] = useState(false);
 
+  /**
+   * Triggers a POST request. Response information will be in `data`, `error`, and `loading`, 
+   * which are returned from the `useBackendCalculation` hook along with this function. 
+   * Wrapped in `useCallback` to avoid unnecessary redefinitions and infinite loops.
+   * 
+   * @param request - One of the valid `CalculationRequest` types to be sent to the API.
+   * @param callback - Optional callback function. Use this for setter functions 
+   *                   that rely on the API request being complete.
+   */
   const requestCalculation = useCallback(
     async (request: CalculationRequest, callback?: (data: CalculationResponse) => void) => {
       setLoading(true);
       axios
-        .post<CalculationResponse>(API_URL, request)
+        .post<CalculationResponse>(API_address, request)
         .then((response) => {
           if (response.data) {
             setData(response.data);

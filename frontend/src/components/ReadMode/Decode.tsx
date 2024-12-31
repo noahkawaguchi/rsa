@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { PrivateKey } from '../types';
-import { useBackendCalculation } from '../hooks/useBackendCalculation';
+import { PrivateKey } from '../../types';
+import { useBackendCalculation } from '../../hooks/useBackendCalculation';
 
 const Decode: React.FC<PrivateKey> = ({ n, d }) => {
   const [ciphertext, setCiphertext] = useState('');

@@ -1,28 +1,28 @@
 import React, { useState } from 'react';
-import { PrivateKey } from '../types';
+import { PublicKey } from '../../types';
 
-interface EnterPrivateKeyProps {
-  updatePrivateKey(key: PrivateKey): void;
+interface EnterPublicKeyProps {
+  updatePublicKey(key: PublicKey): void;
 }
 
-const EnterPrivateKey: React.FC<EnterPrivateKeyProps> = ({ updatePrivateKey }) => {
+const EnterPublicKey: React.FC<EnterPublicKeyProps> = ({ updatePublicKey }) => {
   const [submitted, setSubmitted] = useState(false);
   const [nInput, setNInput] = useState(0);
-  const [dInput, setDInput] = useState(0);
+  const [eInput, setEInput] = useState(0);
 
   const handleNChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value === '' ? 0 : parseInt(event.target.value);
     setNInput(value);
   };
 
-  const handleDChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleEChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value === '' ? 0 : parseInt(event.target.value);
-    setDInput(value);
+    setEInput(value);
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    updatePrivateKey({ n: nInput, d: dInput });
+    updatePublicKey({ n: nInput, e: eInput });
     setSubmitted(true);
   };
 
@@ -31,14 +31,14 @@ const EnterPrivateKey: React.FC<EnterPrivateKeyProps> = ({ updatePrivateKey }) =
       <h4>
         Step 1:
         <br />
-        Enter Private Key
+        Enter Public Key
       </h4>
       {!submitted ? (
         <form onSubmit={handleSubmit}>
-          <p>Enter your private key (n, d):</p>
-          <label htmlFor='private-n-input'>n: </label>
+          <p>Enter the recipient's public key (n, e):</p>
+          <label htmlFor='public-n-input'>n: </label>
           <input
-            id='private-n-input'
+            id='public-n-input'
             type='number'
             min={1}
             placeholder='enter n...'
@@ -47,14 +47,14 @@ const EnterPrivateKey: React.FC<EnterPrivateKeyProps> = ({ updatePrivateKey }) =
             required
           />
           <br />
-          <label htmlFor='private-d-input'>d: </label>
+          <label htmlFor='public-e-input'>e: </label>
           <input
-            id='private-d-input'
+            id='public-e-input'
             type='number'
             min={1}
-            placeholder='enter d...'
+            placeholder='enter e...'
             inputMode='numeric'
-            onChange={handleDChange}
+            onChange={handleEChange}
             required
           />
           <br />
@@ -63,11 +63,11 @@ const EnterPrivateKey: React.FC<EnterPrivateKeyProps> = ({ updatePrivateKey }) =
       ) : (
         <>
           <p>n: {nInput}</p>
-          <p>d: {dInput}</p>
+          <p>e: {eInput}</p>
         </>
       )}
     </div>
   );
 };
 
-export default EnterPrivateKey;
+export default EnterPublicKey;

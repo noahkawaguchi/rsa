@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { PublicKey } from '../types';
-import { useBackendCalculation } from '../hooks/useBackendCalculation';
+import { PublicKey } from '../../types';
+import { useBackendCalculation } from '../../hooks/useBackendCalculation';
 
 const Encode: React.FC<PublicKey> = ({ n, e }) => {
   const [plaintext, setPlaintext] = useState('');

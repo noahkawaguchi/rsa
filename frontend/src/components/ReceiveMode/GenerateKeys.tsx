@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useBackendCalculation } from '../hooks/useBackendCalculation';
-import { Primes } from '../types';
+import { useBackendCalculation } from '../../hooks/useBackendCalculation';
+import { Primes } from '../../types';
 
 const GenerateKeys: React.FC<Primes> = ({ p, q }) => {
   const [buttonClicked, setButtonClicked] = useState(false);

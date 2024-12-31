@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { PublicKey } from '../types';
+import { PublicKey } from '../../types';
 import EnterPublicKey from './EnterPublicKey';
 import Encode from './Encode';
 
@@ -15,11 +15,11 @@ const WriteMessage: React.FC = () => {
 
   return (
     <>
-      <EnterPublicKey updatePublicKey={updatePublicKey}/>
+      <EnterPublicKey updatePublicKey={updatePublicKey} />
       <hr />
       {publicKey.n !== 0 && publicKey.e !== 0 && (
         <>
-          <Encode n={publicKey.n} e={publicKey.e}/>
+          <Encode n={publicKey.n} e={publicKey.e} />
           <hr />
         </>
       )}
