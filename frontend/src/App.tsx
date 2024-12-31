@@ -4,6 +4,7 @@ import './App.css';
 import Header from './components/Header';
 import ReceiveMessage from './components/ReceiveMessage';
 import WriteMessage from './components/WriteMessage';
+import ReadMessage from './components/ReadMessage';
 
 type Mode = 'welcome' | 'receive' | 'write' | 'read';
 
@@ -32,7 +33,7 @@ const App: React.FC = () => {
               Write Message
             </button>
             <label htmlFor='write-button'>
-              — use someone's public key to write them a message
+              — use someone else's public key to write them a message
             </label>
             <br />
             <hr />
@@ -50,7 +51,7 @@ const App: React.FC = () => {
         <div>
           {mode === 'receive' && <ReceiveMessage />}
           {mode === 'write' && <WriteMessage />}
-          {mode === 'read' && <p>[read will go here]</p>}
+          {mode === 'read' && <ReadMessage />}
           {mode !== 'welcome' && (
             <button onClick={() => handleButtonClick('welcome')}>Home</button>
           )}

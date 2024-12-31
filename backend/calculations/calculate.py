@@ -28,8 +28,19 @@ def calculate(data: dict) -> dict:
                 raise TypeError('Input for keys calculation must be an '
                                 'object/dict of two primes with keys p and q')
         case 'encode':
-            ciphertext = rsa.encode(n=data['n'], e=data['e'], message=data['plaintext'])
+            ciphertext = rsa.encode(n=data['n'], e=data['e'],
+                                    message=data['plaintext'])
             return {'ciphertext': ciphertext}
+        case 'decode':
+            try:
+                plaintext = rsa.decode(n=data['n'], d=data['d'],
+                                       cipher_text=data['ciphertext'])
+                return {'plaintext': plaintext}
+            except TypeError as e:
+                raise TypeError('n, d, and all elements of the '
+                                'ciphertext list must be integers')
+            except ValueError as e:
+                raise ValueError('all inputs must be positive integers')
         case _:
             raise ValueError(f'Unsupported calculation type: '
                              '{calculation_type}')

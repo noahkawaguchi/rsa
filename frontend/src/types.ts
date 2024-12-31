@@ -26,6 +26,11 @@ export interface EncodeRequest extends PublicKey {
   plaintext: string;
 }
 
+export interface DecodeRequest extends PrivateKey {
+  type: 'decode';
+  ciphertext: Array<number>;
+}
+
 export interface PrimesResponse {
   type: 'primes';
   result?: Primes;
@@ -44,5 +49,11 @@ export interface EncodeResponse {
   error?: string;
 }
 
-export type CalculationRequest = PrimesRequest | KeysRequest | EncodeRequest;
-export type CalculationResponse = PrimesResponse | KeysResponse | EncodeResponse;
+export interface DecodeResponse {
+  type: 'decode';
+  result?: { plaintext: string };
+  error?: string;
+}
+
+export type CalculationRequest = PrimesRequest | KeysRequest | EncodeRequest | DecodeRequest;
+export type CalculationResponse = PrimesResponse | KeysResponse | EncodeResponse | DecodeResponse;

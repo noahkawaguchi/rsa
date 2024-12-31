@@ -34,6 +34,7 @@ input {
 .step-outer {
   margin: auto;
   display: flex;
+  max-width: min(95vw, 800px);
 }
 
 .step-inner {
@@ -45,11 +46,6 @@ input {
 .step-inner > * {
   margin: auto 5px;
   padding: 10px;
-}
-
-.long-text {
-  max-width: 60vw;
-  text-align: justify;
 }
 
 .emphasize-key {

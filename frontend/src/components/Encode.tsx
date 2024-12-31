@@ -30,14 +30,14 @@ const Encode: React.FC<PublicKey> = ({ n, e }) => {
         </h4>
         {!submitted ? (
           <form onSubmit={handleSubmit}>
-            <label htmlFor='input'>Enter your secret message:</label>
+            <label htmlFor='plaintext-input'>Enter your secret message:</label>
             <br />
             <input
               type='text'
-              id='input'
+              id='plaintext-input'
               value={plaintext}
               onChange={handleInputChange}
-              placeholder='plaintext goes here...'
+              placeholder='plaintext goes here'
             />
             <button type='submit'>Encode</button>
           </form>
@@ -47,7 +47,7 @@ const Encode: React.FC<PublicKey> = ({ n, e }) => {
           data.result && (
             <div>
               <p>Ciphertext:</p>
-              <p className='long-text'>{data.result.ciphertext.join(', ')}</p>
+              <p>{data.result.ciphertext.join(', ')}</p>
               <p>
                 <em>This is what you send to the recipient!</em>
               </p>
