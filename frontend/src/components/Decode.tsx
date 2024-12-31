@@ -28,40 +28,40 @@ const Decode: React.FC<PrivateKey> = ({ n, d }) => {
   if (loading) return <p>Loading...</p>;
 
   return (
-    <div className='step-outer'>
-      <div className='step-inner'>
-        <h4>
-          Step 2:
+    <div className='step'>
+      <h4>
+        Step 2:
+        <br />
+        Decode Message
+      </h4>
+      {!submitted ? (
+        <form onSubmit={handleSubmit}>
+          <label htmlFor='ciphertext-input'>Enter the secret message's ciphertext:</label>
           <br />
-          Decode Message
-        </h4>
-        {!submitted ? (
-          <form onSubmit={handleSubmit}>
-            <label htmlFor='ciphertext-input'>Enter the secret message's ciphertext:</label>
-            <br />
-            <input
-              type='text'
-              id='ciphertext-input'
-              value={ciphertext}
-              onChange={handleInputChange}
-              placeholder='ciphertext goes here'
-            />
-            <button type='submit'>Decode</button>
+          <input
+            type='text'
+            id='ciphertext-input'
+            value={ciphertext}
+            onChange={handleInputChange}
+            placeholder='ciphertext goes here'
+          />
+          <button type='submit'>Decode</button>
+          <p>
+            <i>(For example: 183965, 1578, 93928, 7832)</i>
+          </p>
+        </form>
+      ) : (
+        data &&
+        data.type === 'decode' &&
+        data.result && (
+          <div>
             <p>
-              <i>(For example: 183965, 1578, 93928, 7832)</i>
+              <em>Here is the secret message!</em>
             </p>
-          </form>
-        ) : (
-          data &&
-          data.type === 'decode' &&
-          data.result && (
-            <div>
-              <p>Here is the secret message!</p>
-              <p>{data.result.plaintext}</p>
-            </div>
-          )
-        )}
-      </div>
+            <p>{data.result.plaintext}</p>
+          </div>
+        )
+      )}
     </div>
   );
 };

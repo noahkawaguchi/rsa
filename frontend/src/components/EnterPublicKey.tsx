@@ -27,47 +27,45 @@ const EnterPublicKey: React.FC<EnterPublicKeyProps> = ({ updatePublicKey }) => {
   };
 
   return (
-    <div className='step-outer'>
-      <div className='step-inner'>
-        <h4>
-          Step 1:
+    <div className='step'>
+      <h4>
+        Step 1:
+        <br />
+        Enter Public Key
+      </h4>
+      {!submitted ? (
+        <form onSubmit={handleSubmit}>
+          <p>Enter the recipient's public key (n, e):</p>
+          <label htmlFor='public-n-input'>n: </label>
+          <input
+            id='public-n-input'
+            type='number'
+            min={1}
+            placeholder='enter n...'
+            inputMode='numeric'
+            onChange={handleNChange}
+            required
+          />
           <br />
-          Enter Public Key
-        </h4>
-        {!submitted ? (
-          <form onSubmit={handleSubmit}>
-            <p>Enter the recipient's public key (n, e):</p>
-            <label htmlFor='public-n-input'>n: </label>
-            <input
-              id='public-n-input'
-              type='number'
-              min={1}
-              placeholder='enter n...'
-              inputMode='numeric'
-              onChange={handleNChange}
-              required
-            />
-            <br />
-            <label htmlFor='public-e-input'>e: </label>
-            <input
-              id='public-e-input'
-              type='number'
-              min={1}
-              placeholder='enter e...'
-              inputMode='numeric'
-              onChange={handleEChange}
-              required
-            />
-            <br />
-            <button type='submit'>Submit</button>
-          </form>
-        ) : (
-          <>
-            <p>n: {nInput}</p>
-            <p>e: {eInput}</p>
-          </>
-        )}
-      </div>
+          <label htmlFor='public-e-input'>e: </label>
+          <input
+            id='public-e-input'
+            type='number'
+            min={1}
+            placeholder='enter e...'
+            inputMode='numeric'
+            onChange={handleEChange}
+            required
+          />
+          <br />
+          <button type='submit'>Submit</button>
+        </form>
+      ) : (
+        <>
+          <p>n: {nInput}</p>
+          <p>e: {eInput}</p>
+        </>
+      )}
     </div>
   );
 };

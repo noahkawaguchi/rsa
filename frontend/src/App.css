@@ -31,19 +31,15 @@ input {
   text-align: left;
 }
 
-.step-outer {
-  margin: auto;
-  display: flex;
-  max-width: min(95vw, 800px);
-}
-
-.step-inner {
+.step {
   margin: auto;
   display: flex;
   align-items: center;
+  justify-content: center;
+  max-width: min(95vw, 800px);
 }
 
-.step-inner > * {
+.step > * {
   margin: auto 5px;
   padding: 10px;
 }

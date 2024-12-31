@@ -21,40 +21,38 @@ const Encode: React.FC<PublicKey> = ({ n, e }) => {
   if (loading) return <p>Loading...</p>;
 
   return (
-    <div className='step-outer'>
-      <div className='step-inner'>
-        <h4>
-          Step 2:
+    <div className='step'>
+      <h4>
+        Step 2:
+        <br />
+        Encode Message
+      </h4>
+      {!submitted ? (
+        <form onSubmit={handleSubmit}>
+          <label htmlFor='plaintext-input'>Enter your secret message:</label>
           <br />
-          Encode Message
-        </h4>
-        {!submitted ? (
-          <form onSubmit={handleSubmit}>
-            <label htmlFor='plaintext-input'>Enter your secret message:</label>
-            <br />
-            <input
-              type='text'
-              id='plaintext-input'
-              value={plaintext}
-              onChange={handleInputChange}
-              placeholder='plaintext goes here'
-            />
-            <button type='submit'>Encode</button>
-          </form>
-        ) : (
-          data &&
-          data.type === 'encode' &&
-          data.result && (
-            <div>
-              <p>Ciphertext:</p>
-              <p>{data.result.ciphertext.join(', ')}</p>
-              <p>
-                <em>This is what you send to the recipient!</em>
-              </p>
-            </div>
-          )
-        )}
-      </div>
+          <input
+            type='text'
+            id='plaintext-input'
+            value={plaintext}
+            onChange={handleInputChange}
+            placeholder='plaintext goes here'
+          />
+          <button type='submit'>Encode</button>
+        </form>
+      ) : (
+        data &&
+        data.type === 'encode' &&
+        data.result && (
+          <div>
+            <p>Ciphertext:</p>
+            <p>{data.result.ciphertext.join(', ')}</p>
+            <p>
+              <em>This is what you send to the recipient!</em>
+            </p>
+          </div>
+        )
+      )}
     </div>
   );
 };

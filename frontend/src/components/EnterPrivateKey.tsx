@@ -27,47 +27,45 @@ const EnterPrivateKey: React.FC<EnterPrivateKeyProps> = ({ updatePrivateKey }) =
   };
 
   return (
-    <div className='step-outer'>
-      <div className='step-inner'>
-        <h4>
-          Step 1:
+    <div className='step'>
+      <h4>
+        Step 1:
+        <br />
+        Enter Private Key
+      </h4>
+      {!submitted ? (
+        <form onSubmit={handleSubmit}>
+          <p>Enter your private key (n, d):</p>
+          <label htmlFor='private-n-input'>n: </label>
+          <input
+            id='private-n-input'
+            type='number'
+            min={1}
+            placeholder='enter n...'
+            inputMode='numeric'
+            onChange={handleNChange}
+            required
+          />
           <br />
-          Enter Private Key
-        </h4>
-        {!submitted ? (
-          <form onSubmit={handleSubmit}>
-            <p>Enter your private key (n, d):</p>
-            <label htmlFor='private-n-input'>n: </label>
-            <input
-              id='private-n-input'
-              type='number'
-              min={1}
-              placeholder='enter n...'
-              inputMode='numeric'
-              onChange={handleNChange}
-              required
-            />
-            <br />
-            <label htmlFor='private-d-input'>d: </label>
-            <input
-              id='private-d-input'
-              type='number'
-              min={1}
-              placeholder='enter d...'
-              inputMode='numeric'
-              onChange={handleDChange}
-              required
-            />
-            <br />
-            <button type='submit'>Submit</button>
-          </form>
-        ) : (
-          <>
-            <p>n: {nInput}</p>
-            <p>d: {dInput}</p>
-          </>
-        )}
-      </div>
+          <label htmlFor='private-d-input'>d: </label>
+          <input
+            id='private-d-input'
+            type='number'
+            min={1}
+            placeholder='enter d...'
+            inputMode='numeric'
+            onChange={handleDChange}
+            required
+          />
+          <br />
+          <button type='submit'>Submit</button>
+        </form>
+      ) : (
+        <>
+          <p>n: {nInput}</p>
+          <p>d: {dInput}</p>
+        </>
+      )}
     </div>
   );
 };

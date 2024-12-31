@@ -24,30 +24,28 @@ const GeneratePrimes: React.FC<GeneratePrimesProps> = ({ updatePrimes }) => {
   if (loading) return <p>Loading...</p>;
 
   return (
-    <div className='step-outer'>
-      <div className='step-inner'>
-        <h4>
-          Step 1:
-          <br />
-          Generate Primes
-        </h4>
-        {!hasChosen ? (
-          <div>
-            <p>I want to receive secret messages containing...</p>
-            <button onClick={() => unicodeChoice('ascii')}>ASCII only</button>
-            <button onClick={() => unicodeChoice('unicode')}>Unicode symbols</button>
-            <p>(If you're unsure, choose Unicode)</p>
-          </div>
-        ) : (
-          data &&
-          data.type === 'primes' &&
-          data.result && (
-            <p>
-              Your primes p and q are {data.result.p} and {data.result.q}
-            </p>
-          )
-        )}
-      </div>
+    <div className='step'>
+      <h4>
+        Step 1:
+        <br />
+        Generate Primes
+      </h4>
+      {!hasChosen ? (
+        <div>
+          <p>I want to receive secret messages containing...</p>
+          <button onClick={() => unicodeChoice('ascii')}>ASCII only</button>
+          <button onClick={() => unicodeChoice('unicode')}>Unicode symbols</button>
+          <p>(If you're unsure, choose Unicode)</p>
+        </div>
+      ) : (
+        data &&
+        data.type === 'primes' &&
+        data.result && (
+          <p>
+            Your primes p and q are {data.result.p} and {data.result.q}
+          </p>
+        )
+      )}
     </div>
   );
 };

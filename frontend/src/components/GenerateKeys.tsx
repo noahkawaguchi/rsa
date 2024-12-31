@@ -16,40 +16,38 @@ const GenerateKeys: React.FC<Primes> = ({ p, q }) => {
   if (loading) return <p>Loading...</p>;
 
   return (
-    <div className='step-outer'>
-      <div className='step-inner'>
-        <h4>
-          Step 2:
-          <br />
-          Generate Keys
-        </h4>
-        {data &&
-          data.type === 'keys' &&
-          data.result &&
-          (!buttonClicked ? (
-            <div>
-              <p>
-                Your <span className='emphasize-key'>public key</span> (n, e) will be for other
-                people to use to encode messages to you. Your{' '}
-                <span className='emphasize-key'>private key</span> (n, d) will be for you to use to
-                decode messages encoded using your public key. This way, you can openly broadcast
-                your public key while keeping your private key secret, and people will be able to
-                write you messages without being able to read your messages.
-              </p>
-              <button onClick={handleButtonClick}>Generate keys from primes</button>
-            </div>
-          ) : (
-            <div>
-              <p>
-                Your public key (n, e) is ({data.result.n}, {data.result.e}) <br />
-                Your private key (n, d) is ({data.result.n}, {data.result.d}) <br />
-              </p>
-              <p>
-                <em>Keep these somewhere safe!</em>
-              </p>
-            </div>
-          ))}
-      </div>
+    <div className='step'>
+      <h4>
+        Step 2:
+        <br />
+        Generate Keys
+      </h4>
+      {data &&
+        data.type === 'keys' &&
+        data.result &&
+        (!buttonClicked ? (
+          <div>
+            <p>
+              Your <span className='emphasize-key'>public key</span> (n, e) will be for other
+              people to use to encode messages to you. Your{' '}
+              <span className='emphasize-key'>private key</span> (n, d) will be for you to use to
+              decode messages encoded using your public key. This way, you can openly broadcast
+              your public key while keeping your private key secret, and people will be able to
+              write you messages without being able to read your messages.
+            </p>
+            <button onClick={handleButtonClick}>Generate keys from primes</button>
+          </div>
+        ) : (
+          <div>
+            <p>
+              Your public key (n, e) is ({data.result.n}, {data.result.e}) <br />
+              Your private key (n, d) is ({data.result.n}, {data.result.d}) <br />
+            </p>
+            <p>
+              <em>Keep these somewhere safe!</em>
+            </p>
+          </div>
+        ))}
     </div>
   );
 };
