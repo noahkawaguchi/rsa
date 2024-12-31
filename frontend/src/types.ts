@@ -3,36 +3,32 @@ export interface Primes {
   q: number;
 }
 
+export interface Keys {
+  n: number;
+  e: number;
+  d: number;
+}
+
 export interface PrimesRequest {
   type: 'primes';
   choice: 'ascii' | 'unicode';
 }
 
-export interface PrimesResponse {
-  type: 'primes';
-  result?: {
-    p: number;
-    q: number;
-  };
-  error?: string;
+export interface KeysRequest extends Primes {
+  type: 'keys';
 }
 
-export interface KeysRequest {
-  type: 'keys';
-  p: number;
-  q: number;
+export interface PrimesResponse {
+  type: 'primes';
+  result?: Primes;
+  error?: string;
 }
 
 export interface KeysResponse {
   type: 'keys';
-  result?: {
-    n: number;
-    e: number;
-    d: number;
-  };
+  result?: Keys;
   error?: string;
 }
 
 export type CalculationRequest = PrimesRequest | KeysRequest;
-
 export type CalculationResponse = PrimesResponse | KeysResponse;
