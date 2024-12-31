@@ -28,7 +28,7 @@ const GenerateKeys: React.FC<Primes> = ({ p, q }) => {
           data.result &&
           (!buttonClicked ? (
             <div>
-              <p className='keys-explanation'>
+              <p className='long-text'>
                 Your <span className='emphasize-key'>public key</span> (n, e) will be for other
                 people to use to encode messages for you. Your{' '}
                 <span className='emphasize-key'>private key</span> (n, d) will be for you to use to

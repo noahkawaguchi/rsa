@@ -1,16 +1,24 @@
 import React, { useState } from 'react';
+import { PublicKey } from '../types';
+import { useBackendCalculation } from '../hooks/useBackendCalculation';
 
-const Encode: React.FC = () => {
+const Encode: React.FC<PublicKey> = ({ n, e }) => {
   const [plaintext, setPlaintext] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+  const { data, error, loading, requestCalculation } = useBackendCalculation();
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    await requestCalculation({ type: 'encode', n: n, e: e, plaintext: plaintext });
+    setSubmitted(true);
+  };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPlaintext(event.target.value);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    console.log(`Submitted value: ${plaintext}`);
-  };
+  if (error) return <p>Error: {error.message}</p>;
+  if (loading) return <p>Loading...</p>;
 
   return (
     <div className='step-outer'>
@@ -20,7 +28,7 @@ const Encode: React.FC = () => {
           <br />
           Encode Message
         </h4>
-        <div>
+        {!submitted ? (
           <form onSubmit={handleSubmit}>
             <label htmlFor='input'>Enter your secret message:</label>
             <br />
@@ -33,7 +41,19 @@ const Encode: React.FC = () => {
             />
             <button type='submit'>Encode</button>
           </form>
-        </div>
+        ) : (
+          data &&
+          data.type === 'encode' &&
+          data.result && (
+            <div>
+              <p>Ciphertext:</p>
+              <p className='long-text'>{data.result.ciphertext.join(', ')}</p>
+              <p>
+                <em>This is what you send to the recipient!</em>
+              </p>
+            </div>
+          )
+        )}
       </div>
     </div>
   );

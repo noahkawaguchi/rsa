@@ -27,6 +27,9 @@ def calculate(data: dict) -> dict:
             except (TypeError, KeyError) as e:
                 raise TypeError('Input for keys calculation must be an '
                                 'object/dict of two primes with keys p and q')
+        case 'encode':
+            ciphertext = rsa.encode(n=data['n'], e=data['e'], message=data['plaintext'])
+            return {'ciphertext': ciphertext}
         case _:
             raise ValueError(f'Unsupported calculation type: '
                              '{calculation_type}')

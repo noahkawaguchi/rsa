@@ -19,7 +19,7 @@ const WriteMessage: React.FC = () => {
       <hr />
       {publicKey.n !== 0 && publicKey.e !== 0 && (
         <>
-          <Encode />
+          <Encode n={publicKey.n} e={publicKey.e}/>
           <hr />
         </>
       )}

@@ -45,6 +45,7 @@ const EnterPublicKey: React.FC<EnterPublicKeyProps> = ({ updatePublicKey }) => {
               placeholder='enter n...'
               inputMode='numeric'
               onChange={handleNChange}
+              required
             />
             <br />
             <label htmlFor='public-e-input'>e: </label>
@@ -55,6 +56,7 @@ const EnterPublicKey: React.FC<EnterPublicKeyProps> = ({ updatePublicKey }) => {
               placeholder='enter e...'
               inputMode='numeric'
               onChange={handleEChange}
+              required
             />
             <br />
             <button type='submit'>Submit</button>
