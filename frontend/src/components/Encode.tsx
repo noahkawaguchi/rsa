@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Keys } from '../types';
 
-const Encode: React.FC<Keys> = ({ n, e, d }) => {
+const Encode: React.FC = () => {
   const [plaintext, setPlaintext] = useState('');
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -14,27 +13,27 @@ const Encode: React.FC<Keys> = ({ n, e, d }) => {
   };
 
   return (
-    <div className='step'>
-      <h4>
-        Step 3:
-        <br />
-        Encode Message
-      </h4>
-      <div>
-        <form onSubmit={handleSubmit}>
-          <label htmlFor='input'>Enter your secret message:</label>
-          <input
-            type='text'
-            id='input'
-            value={plaintext}
-            onChange={handleInputChange}
-            placeholder='plaintext here...'
-          />
-          <button type='submit'>Submit</button>
-        </form>
-        <p>
-          n = {n} | e = {e} | d = {d}
-        </p>
+    <div className='step-outer'>
+      <div className='step-inner'>
+        <h4>
+          Step 2:
+          <br />
+          Encode Message
+        </h4>
+        <div>
+          <form onSubmit={handleSubmit}>
+            <label htmlFor='input'>Enter your secret message:</label>
+            <br />
+            <input
+              type='text'
+              id='input'
+              value={plaintext}
+              onChange={handleInputChange}
+              placeholder='plaintext goes here...'
+            />
+            <button type='submit'>Encode</button>
+          </form>
+        </div>
       </div>
     </div>
   );

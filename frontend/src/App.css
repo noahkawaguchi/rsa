@@ -4,27 +4,55 @@ button {
   color: white;
   padding: 5px;
   border-radius: 5px;
-  margin: 3px;
+  margin: 5px;
   cursor: pointer;
+  width: max-content;
 }
 
 main {
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
 hr {
   width: 100%;
 }
 
-.step {
-  margin: auto;
-  display: flex;
-  width: min-content;
+input {
+  font-size: 1rem;
+  margin: 5px;
+  padding: 5px;
+  border-radius: 5px;
 }
 
-.step > * {
+.main-menu {
+  text-align: left;
+}
+
+.step-outer {
+  margin: auto;
+  display: flex;
+}
+
+.step-inner {
+  margin: auto;
+  display: flex;
+  align-items: center;
+}
+
+.step-inner > * {
   margin: auto 5px;
   padding: 10px;
-  width: max-content;
+}
+
+.keys-explanation {
+  max-width: 60vw;
+  text-align: justify;
+}
+
+.emphasize-key {
+  font-weight: bold;
+  color: goldenrod;
 }

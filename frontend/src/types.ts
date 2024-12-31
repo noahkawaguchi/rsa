@@ -9,6 +9,9 @@ export interface Keys {
   d: number;
 }
 
+export type PublicKey = Omit<Keys, 'd'>;
+export type PrivateKey = Omit<Keys, 'e'>;
+
 export interface PrimesRequest {
   type: 'primes';
   choice: 'ascii' | 'unicode';
