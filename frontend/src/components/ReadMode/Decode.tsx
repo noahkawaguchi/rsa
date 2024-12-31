@@ -36,7 +36,9 @@ const Decode: React.FC<PrivateKey> = ({ n, d }) => {
       </h4>
       {!submitted ? (
         <form onSubmit={handleSubmit}>
-          <label htmlFor='ciphertext-input'>Enter the secret message's ciphertext:</label>
+          <label htmlFor='ciphertext-input'>
+            Enter the <span className='bold-gold'>ciphertext</span> you received:
+          </label>
           <br />
           <input
             type='text'
@@ -58,7 +60,7 @@ const Decode: React.FC<PrivateKey> = ({ n, d }) => {
             <p>
               <em>Here is the secret message!</em>
             </p>
-            <p>{data.result.plaintext}</p>
+            <p className='message-text'>{data.result.plaintext}</p>
           </div>
         )
       )}

@@ -35,7 +35,9 @@ const EnterPrivateKey: React.FC<EnterPrivateKeyProps> = ({ updatePrivateKey }) =
       </h4>
       {!submitted ? (
         <form onSubmit={handleSubmit}>
-          <p>Enter your private key (n, d):</p>
+          <p>
+            Enter <span className='bold-gold'>your private key</span> (n, d):
+          </p>
           <label htmlFor='private-n-input'>n: </label>
           <input
             id='private-n-input'

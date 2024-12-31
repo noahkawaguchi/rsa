@@ -7,6 +7,13 @@ interface GeneratePrimesProps {
   updatePrimes(primes: Primes): void;
 }
 
+/**
+ * Retrieves and displays a random pair of primes from the
+ * API depending on the user's choice of ASCII or Unicode.
+ * @param updatePrimes - A function to inform the parent of the retrieved primes.
+ * @returns An interface asking for the user's choice of ASCII or Unicode if they
+ *          have not chosen yet, or text displaying the two primes if they have.
+ */
 const GeneratePrimes: React.FC<GeneratePrimesProps> = ({ updatePrimes }) => {
   const [hasChosen, setHasChosen] = useState(false);
   const { data, error, loading, requestCalculation } = useBackendCalculation();
@@ -32,17 +39,20 @@ const GeneratePrimes: React.FC<GeneratePrimesProps> = ({ updatePrimes }) => {
       </h4>
       {!hasChosen ? (
         <div>
-          <p>I want to receive secret messages containing...</p>
+          <p>
+            I want to <span className='bold-gold'>receive</span> secret messages containing...
+          </p>
           <button onClick={() => unicodeChoice('ascii')}>ASCII only</button>
           <button onClick={() => unicodeChoice('unicode')}>Unicode symbols</button>
-          <p>(If you're unsure, choose Unicode)</p>
+          <p>(If you're unsure, choose <span className='bold-gold'>Unicode</span>.)</p>
         </div>
       ) : (
         data &&
         data.type === 'primes' &&
         data.result && (
           <p>
-            Your primes p and q are {data.result.p} and {data.result.q}
+            Your primes p and q are <span className='bold-gold'>{data.result.p}</span> and{' '}
+            <span className='bold-gold'>{data.result.q}</span>.
           </p>
         )
       )}

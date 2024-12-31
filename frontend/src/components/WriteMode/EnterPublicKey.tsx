@@ -35,7 +35,9 @@ const EnterPublicKey: React.FC<EnterPublicKeyProps> = ({ updatePublicKey }) => {
       </h4>
       {!submitted ? (
         <form onSubmit={handleSubmit}>
-          <p>Enter the recipient's public key (n, e):</p>
+          <p>
+            Enter the <span className='bold-gold'>recipient's public key</span> (n, e):
+          </p>
           <label htmlFor='public-n-input'>n: </label>
           <input
             id='public-n-input'

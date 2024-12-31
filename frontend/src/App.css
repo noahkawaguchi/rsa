@@ -44,7 +44,12 @@ input {
   padding: 10px;
 }
 
-.emphasize-key {
+.bold-gold {
   font-weight: bold;
   color: goldenrod;
+}
+
+.message-text {
+  padding: 10px;
+  border: 2px solid goldenrod;
 }

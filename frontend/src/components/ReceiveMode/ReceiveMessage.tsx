@@ -3,6 +3,7 @@ import GeneratePrimes from './GeneratePrimes';
 import GenerateKeys from './GenerateKeys';
 import { Primes } from '../../types';
 
+/** Component that manages GeneratePrimes and GenerateKeys */
 const ReceiveMessage: React.FC = () => {
   const [primes, setPrimes] = useState<Primes>({ p: 0, q: 0 });
 
