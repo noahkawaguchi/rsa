@@ -1,12 +1,21 @@
 import pytest
-from calculations.utils import validate_pos_ints, generate_primes
+from calculations.utils import (validate_pos_ints, convert_text,
+                                convert_num, generate_primes)
 
 
-@pytest.mark.parametrize('kwargs, expected_exception', [
-    ({'one': 1, 'one_point_five': 1.5, 'true': True}, TypeError),
-    ({'two': 2, 'zero': 0, 'negative_one': -1}, ValueError),
-    ({'three': 3, 'four': 4, 'seven': 7}, None),
-])
+@pytest.mark.parametrize(
+    argnames='kwargs, expected_exception',
+    argvalues=[
+        ({'one': 1, 'one_point_five': 1.5, 'true': True}, TypeError),
+        ({'two': 2, 'zero': 0, 'negative_one': -1}, ValueError),
+        ({'three': 3, 'four': 4, 'seven': 7}, None),
+    ],
+    ids=[
+        'float raises TypeError',
+        '0 raises ValueError',
+        'three positive integers do not cause an exception',
+    ],
+)
 def test_validate_pos_ints(kwargs, expected_exception):
     if expected_exception:
         with pytest.raises(expected_exception) as exc_info:
@@ -16,14 +25,30 @@ def test_validate_pos_ints(kwargs, expected_exception):
         validate_pos_ints(**kwargs)  # Should not raise an exception
 
 
-def test_generate_primes_ascii():
-    p, q = generate_primes(False)
-    assert p, q in ascii_primes
+@pytest.mark.parametrize(
+    'text, int_list',
+    [
+        ('Hello', [0x48, 0x65, 0x6C, 0x6C, 0x6F]),
+        ('世界', [0x4E16, 0x754C]),
+        ('👋🌎', [0x1F44B, 0x1F30E]),
+    ],
+    ids=['ASCII', 'CJK Unified Ideographs', 'emoji']
+)
+def test_convert_text(text, int_list):
+    assert convert_text(text) == int_list
 
 
-def test_generate_primes_unicode():
-    p, q = generate_primes(True)
-    assert p, q in unicode_primes
+@pytest.mark.parametrize(
+    'int_list, string',
+    [
+        ([0x48, 0x65, 0x6C, 0x6C, 0x6F], 'Hello'),
+        ([0x4E16, 0x754C], '世界'),
+        ([0x1F44B, 0x1F30E], '👋🌎'),
+    ],
+    ids=['ASCII', 'CJK Unified Ideographs', 'emoji']
+)
+def test_convert_num(int_list, string):
+    assert convert_num(int_list) == string
 
 
 ascii_primes = [
@@ -66,3 +91,14 @@ unicode_primes = [
     2887, 2897, 2903, 2909, 2917, 2927, 2939, 2953, 2957, 2963, 2969, 2971,
     2999, 3001,
 ]
+
+
+@pytest.mark.parametrize('full_unicode, appropriate_list', [
+    (False, ascii_primes),
+    (True, unicode_primes),
+],
+    ids=['False gets ASCII primes', 'True gets Unicode primes']
+)
+def test_generate_primes(full_unicode, appropriate_list):
+    p, q = generate_primes(full_unicode)
+    assert p in appropriate_list and q in appropriate_list
