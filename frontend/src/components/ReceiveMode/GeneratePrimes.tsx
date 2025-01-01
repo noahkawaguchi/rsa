@@ -8,8 +8,8 @@ interface GeneratePrimesProps {
 }
 
 /**
- * Retrieves and displays a random pair of primes from the
- * API depending on the user's choice of ASCII or Unicode.
+ * Retrieves and displays a random pair of primes depending 
+ * on the user's choice of ASCII or Unicode.
  * @param updatePrimes - A function to inform the parent of the retrieved primes.
  * @returns An interface asking for the user's choice of ASCII or Unicode if they
  *          have not chosen yet, or text displaying the two primes if they have.

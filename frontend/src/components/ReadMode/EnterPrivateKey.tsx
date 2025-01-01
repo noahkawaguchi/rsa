@@ -5,6 +5,11 @@ interface EnterPrivateKeyProps {
   updatePrivateKey(key: PrivateKey): void;
 }
 
+/**
+ * A form for the user to input their private key (n, d) via controlled inputs.
+ * @param updatePrivateKey - A function to inform the parent of the key entered.
+ * @returns The form if the user has not submitted it yet, or text showing the key if they have.
+ */
 const EnterPrivateKey: React.FC<EnterPrivateKeyProps> = ({ updatePrivateKey }) => {
   const [submitted, setSubmitted] = useState(false);
   const [nInput, setNInput] = useState(0);

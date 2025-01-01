@@ -3,6 +3,7 @@ import { PrivateKey } from '../../types';
 import EnterPrivateKey from './EnterPrivateKey';
 import Decode from './Decode';
 
+/** Component that manages EnterPrivateKey and Decode */
 const ReadMessage: React.FC = () => {
   const [privateKey, setPrivateKey] = useState<PrivateKey>({ n: 0, d: 0 });
 

@@ -5,6 +5,11 @@ interface EnterPublicKeyProps {
   updatePublicKey(key: PublicKey): void;
 }
 
+/**
+ * A form for the user to input the recipient's public key (n, e) via controlled inputs.
+ * @param updatePublicKey - A function to inform the parent of the key entered.
+ * @returns The form if the user has not submitted it yet, or text showing the key if they have.
+ */
 const EnterPublicKey: React.FC<EnterPublicKeyProps> = ({ updatePublicKey }) => {
   const [submitted, setSubmitted] = useState(false);
   const [nInput, setNInput] = useState(0);

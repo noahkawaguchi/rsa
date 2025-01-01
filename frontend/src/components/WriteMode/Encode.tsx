@@ -2,6 +2,13 @@ import React, { useState } from 'react';
 import { PublicKey } from '../../types';
 import { useBackendCalculation } from '../../hooks/useBackendCalculation';
 
+/**
+ * Collects the plaintext from the user and then retrieves and displays the ciphertext.
+ * @param n - The first half of the recipient's public key.
+ * @param e - The second half of the recipient's public key. 
+ * @returns A controlled input for the user's message if they have not submitted 
+ *          it yet, or a box displaying the ciphertext if they have.
+ */
 const Encode: React.FC<PublicKey> = ({ n, e }) => {
   const [plaintext, setPlaintext] = useState('');
   const [submitted, setSubmitted] = useState(false);

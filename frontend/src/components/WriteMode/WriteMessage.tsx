@@ -3,6 +3,7 @@ import { PublicKey } from '../../types';
 import EnterPublicKey from './EnterPublicKey';
 import Encode from './Encode';
 
+/** Component that manages EnterPublicKey and Encode */
 const WriteMessage: React.FC = () => {
   const [publicKey, setPublicKey] = useState<PublicKey>({ n: 0, e: 0 });
 

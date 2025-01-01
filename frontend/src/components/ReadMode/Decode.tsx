@@ -2,6 +2,14 @@ import React, { useState } from 'react';
 import { PrivateKey } from '../../types';
 import { useBackendCalculation } from '../../hooks/useBackendCalculation';
 
+/**
+ * Collects the ciphertext from the user, enforcing input of a valid list 
+ * of integers, and then retrieves and displays the plaintext.
+ * @param n - The first half of the user's private key.
+ * @param d - The second half of the user's private key.
+ * @returns A controlled input for the ciphertext if the user has not submitted 
+ *          it yet, or a box displaying the plaintext if they have.
+ */
 const Decode: React.FC<PrivateKey> = ({ n, d }) => {
   const [ciphertext, setCiphertext] = useState('');
   const [submitted, setSubmitted] = useState(false);
