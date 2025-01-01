@@ -1,4 +1,4 @@
-from calculations import RSA_calculations as rsa
+from app.calculations import RSA_calculations as rsa
 
 
 def test_find_public_key():

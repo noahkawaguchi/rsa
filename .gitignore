@@ -24,8 +24,7 @@ dist-ssr
 *.sln
 *.sw?
 
-# Python/Pytest venv and caches
-venv/
+# Python/Pytest caches
 __pycache__/
 *.pyc
 *.pyo
@@ -33,3 +32,7 @@ __pycache__/
 
 # Vite temporary caches
 .vite/
+
+# Environments
+venv/
+.env

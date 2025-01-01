@@ -1,4 +1,4 @@
-from calculations.RSA_helpers import FME, euclidean_alg, EEA
+from app.calculations.RSA_helpers import FME, euclidean_alg, EEA
 
 
 def test_FME():

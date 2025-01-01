@@ -1,6 +1,6 @@
 import pytest
-from calculations.utils import (validate_pos_ints, convert_text,
-                                convert_num, generate_primes)
+from app.calculations.utils import (validate_pos_ints, convert_text,
+                                    convert_num, generate_primes)
 
 
 @pytest.mark.parametrize(
