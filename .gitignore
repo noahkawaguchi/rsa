@@ -24,8 +24,12 @@ dist-ssr
 *.sln
 *.sw?
 
-# Python venv and cache files
+# Python venv and cache
 venv/
 __pycache__/
 *.pyc
 *.pyo
+
+
+# Vite temporary caches
+.vite/
