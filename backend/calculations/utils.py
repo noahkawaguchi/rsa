@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Tuple, List
 from random import sample
 
 
@@ -9,6 +9,20 @@ def validate_pos_ints(**kwargs: any) -> None:
             raise TypeError(f'{name} must be an integer')
         if value <= 0:
             raise ValueError(f'{name} must be positive')
+
+
+def convert_text(_string: str) -> List[int]:
+    """Convert a string of text into a list of the integers 
+    corresponding to each character.
+    """
+    return [ord(ch) for ch in _string]
+
+
+def convert_num(_list: List[int]) -> str:
+    """Convert a list of integers into a string of their corresponding 
+    characters.
+    """
+    return ''.join(chr(i) for i in _list)
 
 
 def generate_primes(full_unicode: bool) -> Tuple[int, int]:

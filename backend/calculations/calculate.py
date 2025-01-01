@@ -1,4 +1,3 @@
-from typing import List
 from . import RSA_calculations as rsa
 from .utils import generate_primes
 
