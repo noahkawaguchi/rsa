@@ -2,6 +2,20 @@ import pytest
 from calculations.utils import validate_pos_ints, generate_primes
 
 
+@pytest.mark.parametrize('kwargs, expected_exception', [
+    ({'one': 1, 'one_point_five': 1.5, 'true': True}, TypeError),
+    ({'two': 2, 'zero': 0, 'negative_one': -1}, ValueError),
+    ({'three': 3, 'four': 4, 'seven': 7}, None),
+])
+def test_validate_pos_ints(kwargs, expected_exception):
+    if expected_exception:
+        with pytest.raises(expected_exception) as exc_info:
+            validate_pos_ints(**kwargs)
+        assert 'must be' in str(exc_info.value)
+    else:
+        validate_pos_ints(**kwargs)  # Should not raise an exception
+
+
 def test_generate_primes_ascii():
     p, q = generate_primes(False)
     assert p, q in ascii_primes
