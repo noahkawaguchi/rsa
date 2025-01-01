@@ -1,9 +1,9 @@
-import pytest
 from calculations.RSA_helpers import FME, euclidean_alg, EEA
 
 
 def test_FME():
-    assert FME(b=529, n=8, m=157) == 529 ** 8 % 157
+    assert FME(529, 8, 157) == 529 ** 8 % 157
+    assert FME(3688, 195, 82) == pow(3688, 195, 82)
 
 
 def test_euclidean_alg():
