@@ -1,7 +1,17 @@
-# RSA Public Key Encryption Project
+# RSA Public Key Encryption
 
 ### Backend
-Python & Flask
 
-### Frontend 
-TypeScript & React
+- Python
+- Flask
+- Pytest
+
+### Frontend
+
+- TypeScript
+- React
+- Vite
+
+### Background Information
+
+- The [Wikipedia page](<https://en.wikipedia.org/wiki/RSA_(cryptosystem)>) on the RSA cryptosystem
