@@ -1,33 +1,47 @@
+from typing import Any
 import pytest
 from app.calculations.utils import (
-    pos_int_required_field, int_list_required_field,
+    pos_int_required_field, pos_int_list_required_field,
     convert_text, convert_num, generate_primes
 )
 
 
-def test_pos_int_required_field():
-    pass
+@pytest.mark.parametrize(
+    'value, expected_exception',
+    [(None, KeyError), ('hello', TypeError), (-2, ValueError), (10, None)],
+    ids=['None raises KeyError', '"hello" raises TypeError',
+         '-2 raises ValueError', '10 does not raise an exception'],
+)
+def test_pos_int_required_field(value: Any,
+                                expected_exception: type[Exception]):
+    if expected_exception:
+        with pytest.raises(expected_exception):
+            pos_int_required_field(value, 'field', 'calc')
+    else:
+        # Should not raise an exception
+        assert isinstance(pos_int_required_field(value, 'field', 'calc'), int)
 
-# @pytest.mark.parametrize(
-#     argnames='kwargs, expected_exception',
-#     argvalues=[
-#         ({'one': 1, 'one_point_five': 1.5, 'true': True}, TypeError),
-#         ({'two': 2, 'zero': 0, 'negative_one': -1}, ValueError),
-#         ({'three': 3, 'four': 4, 'seven': 7}, None),
-#     ],
-#     ids=[
-#         'float raises TypeError',
-#         '0 raises ValueError',
-#         'three positive integers do not cause an exception',
-#     ],
-# )
-# def test_validate_pos_ints(kwargs: Any, expected_exception: Exception):
-#     if expected_exception:
-#         with pytest.raises(expected_exception) as exc_info:
-#             validate_pos_ints(**kwargs)
-#         assert 'must be' in str(exc_info.value)
-#     else:
-#         validate_pos_ints(**kwargs)  # Should not raise an exception
+
+@pytest.mark.parametrize(
+    'candidate, expected_exception',
+    [(None, KeyError), ((1, 2, 3), TypeError), ([1, 2, 'three'], TypeError),
+     ([1, 2, -3], ValueError), ([1, 2, 3], None)],
+    ids=['None raises KeyError',
+         'tuple raises TypeError',
+         'string element raises TypeError',
+         'negative element raises ValueError',
+         'valid list does not raise an exception']
+)
+def test_pos_int_list_required_field(candidate: Any,
+                                     expected_exception: type[Exception]):
+    if expected_exception:
+        with pytest.raises(expected_exception):
+            pos_int_list_required_field(candidate, 'field', 'calc')
+    else:
+        # Should not raise an exception
+        assert isinstance(
+            pos_int_list_required_field(candidate, 'field', 'calc'), list
+        )
 
 
 @pytest.mark.parametrize(

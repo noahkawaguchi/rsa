@@ -1,7 +1,7 @@
 from typing import Any, Mapping
 from app.calculations import RSA_calculations as rsa
 from app.calculations.utils import (generate_primes, pos_int_required_field,
-                                    int_list_required_field)
+                                    pos_int_list_required_field)
 
 
 def validated_primes_calculation(data: dict[str, Any]) -> Mapping[str, int]:
@@ -54,8 +54,8 @@ def validated_decode_calculation(data: dict[str, Any]) -> Mapping[str, str]:
     """
     n = pos_int_required_field(data.get('n'), 'n', 'decode')
     d = pos_int_required_field(data.get('d'), 'd', 'decode')
-    ciphertext = int_list_required_field(data.get('ciphertext'),
-                                         'ciphertext', 'decode')
+    ciphertext = pos_int_list_required_field(data.get('ciphertext'),
+                                             'ciphertext', 'decode')
     plaintext = rsa.decode(n, d, ciphertext)
     return {'plaintext': plaintext}
 

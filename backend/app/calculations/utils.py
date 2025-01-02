@@ -17,27 +17,22 @@ def pos_int_required_field(value: Any, field_name: str, calc_type: str) -> int:
     return value
 
 
-def int_list_required_field(potential_list: Any, field_name: str,
-                            calc_type: str) -> list[int]:
-    """Raise an error if value is None or is not a list of integers. 
-    Otherwise, return the validated list. Should not be used on 
-    extremely long lists for performance reasons.
+def pos_int_list_required_field(candidate: Any, field_name: str,
+                                calc_type: str) -> list[int]:
+    """Raise an error if candidate is None or is not a list (array) of 
+    positive integers. Otherwise, return the validated list. 
     """
-    if potential_list is None:
+    if candidate is None:
         raise KeyError(f'{field_name} is required for '
                        f'{calc_type} calculations')
-    if not isinstance(potential_list, list):
-        raise TypeError(f'{field_name} must be a list, '
-                        f'got {type(potential_list).__name__}')
-    validated: list[int] = []
-    elem: Any
-    for elem in potential_list:
-        if not isinstance(elem, int):
-            raise TypeError(f'{field_name} must contain only integers, '
-                            f'got {type(elem).__name__}')
-        else:
-            validated.append(elem)
-    return validated
+    list_of_any: list[Any]
+    if not isinstance(candidate, list):
+        raise TypeError(f'{field_name} must be a list (array), '
+                        f'got {type(candidate).__name__}')
+    else:
+        list_of_any = candidate
+    return [pos_int_required_field(elem, f'element in {field_name} list',
+                                   f'{calc_type}') for elem in list_of_any]
 
 
 def convert_text(_string: str) -> list[int]:
