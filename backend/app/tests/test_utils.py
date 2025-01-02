@@ -30,7 +30,7 @@ def test_pos_int_required_field(value: Any,
          'tuple raises TypeError',
          'string element raises TypeError',
          'negative element raises ValueError',
-         'valid list does not raise an exception']
+         'valid list does not raise an exception'],
 )
 def test_pos_int_list_required_field(candidate: Any,
                                      expected_exception: type[Exception]):
@@ -51,7 +51,7 @@ def test_pos_int_list_required_field(candidate: Any,
         ('世界', [0x4E16, 0x754C]),
         ('👋🌎', [0x1F44B, 0x1F30E]),
     ],
-    ids=['ASCII', 'CJK Unified Ideographs', 'emoji']
+    ids=['ASCII', 'CJK Unified Ideographs', 'emoji'],
 )
 def test_convert_text(text: str, int_list: list[int]):
     assert convert_text(text) == int_list
@@ -64,7 +64,7 @@ def test_convert_text(text: str, int_list: list[int]):
         ([0x4E16, 0x754C], '世界'),
         ([0x1F44B, 0x1F30E], '👋🌎'),
     ],
-    ids=['ASCII', 'CJK Unified Ideographs', 'emoji']
+    ids=['ASCII', 'CJK Unified Ideographs', 'emoji'],
 )
 def test_convert_num(int_list: list[int], string: str):
     assert convert_num(int_list) == string
@@ -116,7 +116,7 @@ unicode_primes = [
     (False, ascii_primes),
     (True, unicode_primes),
 ],
-    ids=['False gets ASCII primes', 'True gets Unicode primes']
+    ids=['False gets ASCII primes', 'True gets Unicode primes'],
 )
 def test_generate_primes(full_unicode: bool, appropriate_list: list[int]):
     p, q = generate_primes(full_unicode)

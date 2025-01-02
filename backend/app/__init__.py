@@ -13,7 +13,7 @@ def create_app():
         calc_type = data.get('type')
 
         if calc_type is None:
-            return jsonify({'type': calc_type, 
+            return jsonify({'type': calc_type, # None becomes null in json
                             'error': 'type is required'}), 400
 
         try:
