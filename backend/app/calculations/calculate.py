@@ -1,52 +1,78 @@
+from typing import Any, Mapping
 from app.calculations import RSA_calculations as rsa
-from app.calculations.utils import generate_primes, validate_pos_ints
-from app.exceptions import MissingFieldError
+from app.calculations.utils import (generate_primes, pos_int_required_field,
+                                    int_list_required_field)
 
 
-def calculate(data: dict, calc_type: str) -> dict:
+def validated_primes_calculation(data: dict[str, Any]) -> Mapping[str, int]:
+    """Generate primes p and q or raise an exception if the request 
+    data is invalid.
+    """
+    match data.get('choice'):
+        case None:
+            raise KeyError('choice is required for primes calculation')
+        case 'ascii':
+            p, q = generate_primes(full_unicode=False)
+            return {'p': p, 'q': q}
+        case 'unicode':
+            p, q = generate_primes(full_unicode=True)
+            return {'p': p, 'q': q}
+        case _:
+            raise ValueError('choice field for primes calculation '
+                             'must be either "ascii" or "unicode"')
+
+
+def validated_keys_calculation(data: dict[str, Any]) -> Mapping[str, int]:
+    """Generate keys n, e, and d or raise an exception if the request 
+    data is invalid.
+    """
+    p = pos_int_required_field(data.get('p'), 'p', 'keys')
+    q = pos_int_required_field(data.get('q'), 'q', 'keys')
+    n, e = rsa.find_public_key(p, q)
+    d = rsa.find_private_key(e, p, q)
+    return {'n': n, 'e': e, 'd': d}
+
+
+def validated_encode_calculation(data: dict[str, Any]
+                                 ) -> Mapping[str, list[int]]:
+    """Generate encoded ciphertext or raise an exception if the request 
+    data is invalid.
+    """
+    n = pos_int_required_field(data.get('n'), 'n', 'encode')
+    e = pos_int_required_field(data.get('e'), 'e', 'encode')
+    plaintext = data.get('plaintext')
+    if not isinstance(plaintext, str):
+        raise TypeError('plaintext must be a string')
+    else:
+        ciphertext = rsa.encode(n, e, plaintext)
+        return {'ciphertext': ciphertext}
+
+
+def validated_decode_calculation(data: dict[str, Any]) -> Mapping[str, str]:
+    """Generate decoded plaintext or raise an exception if the request 
+    data is invalid.
+    """
+    n = pos_int_required_field(data.get('n'), 'n', 'decode')
+    d = pos_int_required_field(data.get('d'), 'd', 'decode')
+    ciphertext = int_list_required_field(data.get('ciphertext'),
+                                         'ciphertext', 'decode')
+    plaintext = rsa.decode(n, d, ciphertext)
+    return {'plaintext': plaintext}
+
+
+def calculate(data: dict[str, Any],
+              calc_type: str) -> Mapping[str, str | int | list[int]]:
     """Perform the requested calculation on the given input(s).
     If impossible, raise an appropriate exception.
     """
     match calc_type:
         case 'primes':
-            match data.get('choice'):
-                case None:
-                    raise MissingFieldError('choice', 'primes')
-                case 'ascii':
-                    p, q = generate_primes(full_unicode=False)
-                    return {'p': p, 'q': q}
-                case 'unicode':
-                    p, q = generate_primes(full_unicode=True)
-                    return {'p': p, 'q': q}
-                case _:
-                    raise ValueError('choice field for primes calculation '
-                                     'must be either "ascii" or "unicode"')
-
+            return validated_primes_calculation(data)
         case 'keys':
-            p = data.get('p')
-            q = data.get('q')
-            if p is None:
-                raise MissingFieldError('p', 'keys')
-            if q is None:
-                raise MissingFieldError('q', 'keys')
-            validate_pos_ints(p=p, q=q)
-            n, e = rsa.find_public_key(p, q)
-            d = rsa.find_private_key(e, p, q)
-            return {'n': n, 'e': e, 'd': d}
-
+            return validated_keys_calculation(data)
         case 'encode':
-            ciphertext = rsa.encode(n=data['n'], e=data['e'],
-                                    message=data['plaintext'])
-            return {'ciphertext': ciphertext}
-
+            return validated_encode_calculation(data)
         case 'decode':
-            try:
-                plaintext = rsa.decode(n=data['n'], d=data['d'],
-                                       cipher_text=data['ciphertext'])
-                return {'plaintext': plaintext}
-            except (TypeError, ValueError) as e:
-                raise ValueError('n, d, and all elements of the ciphertext '
-                                 'list must be positive integers')
-
+            return validated_decode_calculation(data)
         case _:
             raise ValueError(f'Unsupported calculation type: {calc_type}')

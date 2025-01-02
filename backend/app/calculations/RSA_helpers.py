@@ -1,12 +1,7 @@
-from typing import Tuple
-from .utils import validate_pos_ints
-
-
 def FME(b: int, n: int, m: int) -> int:
     """Quickly compute b^n mod m for b, n, and m in the domain of 
     positive integers.
     """
-    validate_pos_ints(b=b, n=n, m=m)
 
     # Simultaneously get each binary bit for the exponent and accumulate
     # the values corresponding to those that are 1, performing mod m at
@@ -24,7 +19,6 @@ def FME(b: int, n: int, m: int) -> int:
 
 def euclidean_alg(a: int, b: int) -> int:
     """Calculate the greatest common divisor of a and b."""
-    validate_pos_ints(a=a, b=b)
 
     # Make sure we do not try to perform the calculation with b greater
     # than a.
@@ -43,9 +37,8 @@ def euclidean_alg(a: int, b: int) -> int:
     return x
 
 
-def EEA(a: int, b: int) -> Tuple[int, Tuple[int, int]]:
+def EEA(a: int, b: int) -> tuple[int, tuple[int, int]]:
     """Compute the GCD and Bézout coefficients."""
-    validate_pos_ints(a=a, b=b)
 
     # Save the original values of a and b, then switch them if necessary
     # to ensure that we do not calculate with b greater than a.

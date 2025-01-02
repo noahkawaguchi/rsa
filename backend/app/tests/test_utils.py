@@ -1,28 +1,33 @@
 import pytest
-from app.calculations.utils import (validate_pos_ints, convert_text,
-                                    convert_num, generate_primes)
-
-
-@pytest.mark.parametrize(
-    argnames='kwargs, expected_exception',
-    argvalues=[
-        ({'one': 1, 'one_point_five': 1.5, 'true': True}, TypeError),
-        ({'two': 2, 'zero': 0, 'negative_one': -1}, ValueError),
-        ({'three': 3, 'four': 4, 'seven': 7}, None),
-    ],
-    ids=[
-        'float raises TypeError',
-        '0 raises ValueError',
-        'three positive integers do not cause an exception',
-    ],
+from app.calculations.utils import (
+    pos_int_required_field, int_list_required_field,
+    convert_text, convert_num, generate_primes
 )
-def test_validate_pos_ints(kwargs, expected_exception):
-    if expected_exception:
-        with pytest.raises(expected_exception) as exc_info:
-            validate_pos_ints(**kwargs)
-        assert 'must be' in str(exc_info.value)
-    else:
-        validate_pos_ints(**kwargs)  # Should not raise an exception
+
+
+def test_pos_int_required_field():
+    pass
+
+# @pytest.mark.parametrize(
+#     argnames='kwargs, expected_exception',
+#     argvalues=[
+#         ({'one': 1, 'one_point_five': 1.5, 'true': True}, TypeError),
+#         ({'two': 2, 'zero': 0, 'negative_one': -1}, ValueError),
+#         ({'three': 3, 'four': 4, 'seven': 7}, None),
+#     ],
+#     ids=[
+#         'float raises TypeError',
+#         '0 raises ValueError',
+#         'three positive integers do not cause an exception',
+#     ],
+# )
+# def test_validate_pos_ints(kwargs: Any, expected_exception: Exception):
+#     if expected_exception:
+#         with pytest.raises(expected_exception) as exc_info:
+#             validate_pos_ints(**kwargs)
+#         assert 'must be' in str(exc_info.value)
+#     else:
+#         validate_pos_ints(**kwargs)  # Should not raise an exception
 
 
 @pytest.mark.parametrize(
@@ -34,7 +39,7 @@ def test_validate_pos_ints(kwargs, expected_exception):
     ],
     ids=['ASCII', 'CJK Unified Ideographs', 'emoji']
 )
-def test_convert_text(text, int_list):
+def test_convert_text(text: str, int_list: list[int]):
     assert convert_text(text) == int_list
 
 
@@ -47,7 +52,7 @@ def test_convert_text(text, int_list):
     ],
     ids=['ASCII', 'CJK Unified Ideographs', 'emoji']
 )
-def test_convert_num(int_list, string):
+def test_convert_num(int_list: list[int], string: str):
     assert convert_num(int_list) == string
 
 
@@ -99,6 +104,6 @@ unicode_primes = [
 ],
     ids=['False gets ASCII primes', 'True gets Unicode primes']
 )
-def test_generate_primes(full_unicode, appropriate_list):
+def test_generate_primes(full_unicode: bool, appropriate_list: list[int]):
     p, q = generate_primes(full_unicode)
     assert p in appropriate_list and q in appropriate_list

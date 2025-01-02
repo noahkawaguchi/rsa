@@ -7,7 +7,7 @@ def test_find_public_key():
 
 def test_find_private_key():
     p, q = 2887, 2099
-    n, e = rsa.find_public_key(p, q)
+    _, e = rsa.find_public_key(p, q)
     assert rsa.find_private_key(e, p, q) == 3632897
 
 

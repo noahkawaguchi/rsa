@@ -1,31 +1,60 @@
-from typing import Tuple, List
+from typing import Any
 from random import sample
 
 
-def validate_pos_ints(**kwargs: any) -> None:
-    """Raise an error if kwargs are not all positive integers."""
-    for name, value in kwargs.items():
-        if not isinstance(value, int):
-            raise TypeError(f'{name} must be an integer')
-        if value <= 0:
-            raise ValueError(f'{name} must be positive')
+def pos_int_required_field(value: Any, field_name: str, calc_type: str) -> int:
+    """Raise an error if value is None or is not a positive integer. 
+    Otherwise, return the validated value.
+    """
+    if value is None:
+        raise KeyError(f'{field_name} is required '
+                       f'for {calc_type} calculations')
+    if not isinstance(value, int):
+        raise TypeError(f'{field_name} must be an integer, '
+                        f'got {type(value).__name__}')
+    if value <= 0:
+        raise ValueError(f'{field_name} must be positive, got {value}')
+    return value
 
 
-def convert_text(_string: str) -> List[int]:
+def int_list_required_field(potential_list: Any, field_name: str,
+                            calc_type: str) -> list[int]:
+    """Raise an error if value is None or is not a list of integers. 
+    Otherwise, return the validated list. Should not be used on 
+    extremely long lists for performance reasons.
+    """
+    if potential_list is None:
+        raise KeyError(f'{field_name} is required for '
+                       f'{calc_type} calculations')
+    if not isinstance(potential_list, list):
+        raise TypeError(f'{field_name} must be a list, '
+                        f'got {type(potential_list).__name__}')
+    validated: list[int] = []
+    elem: Any
+    for elem in potential_list:
+        if not isinstance(elem, int):
+            raise TypeError(f'{field_name} must contain only integers, '
+                            f'got {type(elem).__name__}')
+        else:
+            validated.append(elem)
+    return validated
+
+
+def convert_text(_string: str) -> list[int]:
     """Convert a string of text into a list of the integers 
     corresponding to each character.
     """
     return [ord(ch) for ch in _string]
 
 
-def convert_num(_list: List[int]) -> str:
+def convert_num(_list: list[int]) -> str:
     """Convert a list of integers into a string of their corresponding 
     characters.
     """
     return ''.join(chr(i) for i in _list)
 
 
-def generate_primes(full_unicode: bool) -> Tuple[int, int]:
+def generate_primes(full_unicode: bool) -> tuple[int, int]:
     """Depending on whether the user will need ASCII or Unicode,
     pseudo-randomly choose a pair of primes p and q.
     """
