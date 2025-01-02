@@ -41,6 +41,8 @@ def validated_encode_calculation(data: dict[str, Any]
     n = pos_int_required_field(data.get('n'), 'n', 'encode')
     e = pos_int_required_field(data.get('e'), 'e', 'encode')
     plaintext = data.get('plaintext')
+    if plaintext is None:
+        raise KeyError('plaintext is required for encode calculations')
     if not isinstance(plaintext, str):
         raise TypeError('plaintext must be a string')
     else:

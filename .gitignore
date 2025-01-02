@@ -24,11 +24,12 @@ dist-ssr
 *.sln
 *.sw?
 
-# Python/Pytest caches
+# Python-related caches
 __pycache__/
 *.pyc
 *.pyo
 .pytest_cache
+.mypy_cache
 
 # Vite temporary caches
 .vite/
