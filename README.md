@@ -11,6 +11,8 @@
 - TypeScript
 - React
 - Vite
+- Jest
+- React Testing Library
 
 ### Background Information
 
