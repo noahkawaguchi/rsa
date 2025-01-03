@@ -4,6 +4,7 @@
 
 - Python
 - Flask
+- Mypy
 - Pytest
 
 ### Frontend
