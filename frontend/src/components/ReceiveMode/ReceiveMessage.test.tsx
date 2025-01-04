@@ -9,7 +9,7 @@ jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 describe('ReceiveMessage', () => {
-  beforeEach(() => mockedAxios.post.mockReset());
+  beforeEach(() => mockedAxios.post.mockClear());
   afterAll(() => mockedAxios.post.mockRestore());
 
   it('should show GenerateKeys only after the user has generated primes', async () => {
