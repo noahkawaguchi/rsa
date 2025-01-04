@@ -9,8 +9,8 @@ jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 describe('ReceiveMessage', () => {
-  afterEach(() => jest.resetAllMocks());
-  afterAll(() => jest.restoreAllMocks());
+  beforeEach(() => mockedAxios.post.mockReset());
+  afterAll(() => mockedAxios.post.mockRestore());
 
   it('should show GenerateKeys only after the user has generated primes', async () => {
     mockedAxios.post.mockImplementation((_: string, data?: unknown) => {
@@ -20,7 +20,7 @@ describe('ReceiveMessage', () => {
       } else if (requestData.type === 'keys') {
         return Promise.resolve({ data: { type: 'keys', result: { n: 1, e: 2, d: 3 } } });
       } else {
-        return Promise.reject(new Error(`Unsupported calculation type: ${requestData.type}`))
+        return Promise.reject(new Error(`Unsupported calculation type: ${requestData.type}`));
       }
     });
     render(<ReceiveMessage />);
