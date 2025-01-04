@@ -1,6 +1,6 @@
 import axios from 'axios';
 import '@testing-library/jest-dom/';
-import { render, screen } from '@testing-library/react';
+import { render, screen, cleanup } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { CalculationRequest } from '../../types';
 import ReceiveMessage from './ReceiveMessage';
@@ -9,7 +9,10 @@ jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 describe('ReceiveMessage', () => {
-  beforeEach(() => mockedAxios.post.mockClear());
+  beforeEach(() => {
+    mockedAxios.post.mockClear()
+    cleanup(); // To prevent this test from failing when I add other test suites
+  });
   afterAll(() => mockedAxios.post.mockRestore());
 
   it('should show GenerateKeys only after the user has generated primes', async () => {
