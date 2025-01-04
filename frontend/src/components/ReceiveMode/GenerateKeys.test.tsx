@@ -9,7 +9,7 @@ jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 describe('GenerateKeys', () => {
-  beforeEach(() => mockedAxios.post.mockClear());
+  beforeEach(() => mockedAxios.post.mockReset());
   afterAll(() => mockedAxios.post.mockRestore());
 
   it('should retrieve keys upon render', async () => {

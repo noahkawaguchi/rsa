@@ -46,6 +46,7 @@ const Encode: React.FC<PublicKey> = ({ n, e }) => {
             value={plaintext}
             onChange={handleInputChange}
             placeholder='plaintext goes here'
+            required
           />
           <button type='submit'>Encode</button>
         </form>

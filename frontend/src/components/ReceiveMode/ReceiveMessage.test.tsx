@@ -1,6 +1,6 @@
 import axios from 'axios';
 import '@testing-library/jest-dom/';
-import { render, screen, cleanup } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { CalculationRequest } from '../../types';
 import ReceiveMessage from './ReceiveMessage';
@@ -9,10 +9,7 @@ jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 describe('ReceiveMessage', () => {
-  beforeEach(() => {
-    mockedAxios.post.mockClear()
-    cleanup(); // To prevent this test from failing when I add other test suites
-  });
+  beforeEach(() => mockedAxios.post.mockReset());
   afterAll(() => mockedAxios.post.mockRestore());
 
   it('should show GenerateKeys only after the user has generated primes', async () => {
@@ -30,6 +27,6 @@ describe('ReceiveMessage', () => {
     const user = userEvent.setup();
     expect(screen.queryByText(/Generate keys/)).not.toBeInTheDocument(); // queryByText returns null
     await user.click(screen.getByText('Unicode symbols'));
-    expect(screen.queryByText(/Generate keys/)).toBeInTheDocument();
+    await waitFor(() => expect(screen.queryByText(/Generate keys/)).toBeInTheDocument());
   });
 });

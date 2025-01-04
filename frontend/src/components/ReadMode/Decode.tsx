@@ -54,6 +54,7 @@ const Decode: React.FC<PrivateKey> = ({ n, d }) => {
             value={ciphertext}
             onChange={handleInputChange}
             placeholder='ciphertext goes here'
+            required
           />
           <button type='submit'>Decode</button>
           <p>

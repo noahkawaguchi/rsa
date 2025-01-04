@@ -9,7 +9,7 @@ jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 describe('GeneratePrimes', () => {
-  beforeEach(() => mockedAxios.post.mockClear());
+  beforeEach(() => mockedAxios.post.mockReset());
   afterAll(() => mockedAxios.post.mockRestore());
 
   it("should retrieve and display primes p and q in response to the user's choice", async () => {

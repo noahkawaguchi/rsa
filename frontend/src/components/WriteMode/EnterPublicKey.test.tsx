@@ -4,7 +4,7 @@ import { userEvent } from '@testing-library/user-event';
 import EnterPublicKey from './EnterPublicKey';
 
 describe('EnterPublicKey', () => {
-  it('should display a form before user submission and the keys after', async () => {
+  it('should display the form before user submission and the keys after', async () => {
     render(<EnterPublicKey updatePublicKey={jest.fn()} />);
     const user = userEvent.setup();
     expect(screen.queryByText("recipient's public key")).toBeInTheDocument();
