@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { renderHook, act } from '@testing-library/react';
+import { renderHook, act, waitFor } from '@testing-library/react';
 import { useBackendCalculation } from './useBackendCalculation';
 import {
   KeysRequest,
@@ -42,10 +42,12 @@ describe('useBackendCalculation', () => {
     expect(result.current.loading).toBe(false);
     expect(result.current.data).toEqual(expectedResult);
     expect(result.current.error).toBeNull();
-    expect(mockedAxios.post).toHaveBeenCalledWith(
-      'http://127.0.0.1:5000/calculate',
-      decodeRequest
-    );
+    waitFor(() => {
+      expect(mockedAxios.post).toHaveBeenCalledWith(
+        'http://127.0.0.1:5000/calculate',
+        decodeRequest
+      );
+    });
   });
 
   it('should call the callback when one is provided', async () => {

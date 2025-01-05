@@ -1,8 +1,7 @@
 import { useState, useCallback } from 'react';
 import axios from 'axios';
 import { CalculationRequest, CalculationResponse } from '../types';
-
-const API_address = 'http://127.0.0.1:5000/calculate';
+import { getApiUrl } from '../config';
 
 /**
  * Custom hook that handles API requests.
@@ -29,7 +28,7 @@ export const useBackendCalculation = () => {
     async (request: CalculationRequest, callback?: (data: CalculationResponse) => void) => {
       setLoading(true);
       axios
-        .post<CalculationResponse>(API_address, request)
+        .post<CalculationResponse>(`${getApiUrl()}/calculate`, request)
         .then((response) => {
           if (response.data) {
             setData(response.data);
