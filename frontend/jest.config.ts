@@ -9,7 +9,7 @@ const config: Config = {
     // Handle static assets (e.g., CSS) or aliases (if needed)
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
   },
-  setupFilesAfterEnv: ['<rootDir>/setupTests.ts'], // global setup file
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'], // global setup file
   testPathIgnorePatterns: ['/node_modules/', '/dist/'],
 };
 
