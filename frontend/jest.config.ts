@@ -6,8 +6,7 @@ const config: Config = {
     '^.+\\.(ts|tsx)$': 'ts-jest',
   },
   moduleNameMapper: {
-    // Handle static assets (e.g., CSS) or aliases (if needed)
-    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
+    '\\.css$': 'identity-obj-proxy', // For when importing CSS files
   },
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'], // global setup file
   testPathIgnorePatterns: ['/node_modules/', '/dist/'],
