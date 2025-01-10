@@ -43,10 +43,7 @@ describe('useBackendCalculation', () => {
     expect(result.current.data).toEqual(expectedResult);
     expect(result.current.error).toBeNull();
     waitFor(() => {
-      expect(mockedAxios.post).toHaveBeenCalledWith(
-        'http://127.0.0.1:5000/calculate',
-        decodeRequest
-      );
+      expect(mockedAxios.post).toHaveBeenCalledWith('/calculate', decodeRequest);
     });
   });
 

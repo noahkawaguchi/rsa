@@ -35,7 +35,7 @@ describe('Decode', () => {
     const user = userEvent.setup();
     await user.type(screen.getByLabelText(/Enter the/), '3475, 34577, 56434, 34');
     await user.click(screen.getByText('Decode'));
-    expect(mockedAxios.post).toHaveBeenCalledWith('http://127.0.0.1:5000/calculate', {
+    expect(mockedAxios.post).toHaveBeenCalledWith('/calculate', {
       type: 'decode',
       n: 25,
       d: 362,

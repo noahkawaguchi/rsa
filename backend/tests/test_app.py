@@ -13,6 +13,12 @@ def client() -> Generator[FlaskClient]:
         yield client
 
 
+def test_index(client: FlaskClient) -> None:
+    response = client.get('/')
+    assert response.status_code == 200
+    assert b'<div id="root"></div>' in response.data
+
+
 @pytest.mark.parametrize(
     'payload, status_code, exception, error, result',
     [({'no_type': 'will not work'}, 400, None, 'type is required', None),
@@ -48,8 +54,8 @@ def test_calculate_endpoint(mocker: MockerFixture, client: FlaskClient,
 def test_too_many_requests(mocker: MockerFixture, client: FlaskClient) -> None:
     mock_calculate = mocker.patch('app.calculate')
     mock_calculate.return_value = {'returned': 'values'}
-    # 4 requests allowed per second
-    for _ in range(4):
+    # 40 requests allowed per second
+    for _ in range(40):
         response = client.post(
             '/calculate', json={'type': 'valid request content'})
         assert response.status_code == 200

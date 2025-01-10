@@ -35,7 +35,7 @@ describe('Encode', () => {
     const user = userEvent.setup();
     await user.type(screen.getByLabelText(/Enter your/), 'Hello API');
     await user.click(screen.getByText('Encode'));
-    expect(mockedAxios.post).toHaveBeenCalledWith('http://127.0.0.1:5000/calculate', {
+    expect(mockedAxios.post).toHaveBeenCalledWith('/calculate', {
       type: 'encode',
       n: 54,
       e: 3,

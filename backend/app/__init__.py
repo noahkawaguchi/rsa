@@ -1,13 +1,11 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, abort, send_from_directory
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
-from flask_cors import CORS
 from app.calculations.calculate import calculate
 
 
 def create_app():
-    app = Flask(__name__)
-    CORS(app)
+    app = Flask(__name__, static_folder='dist/assets')
 
     limiter = Limiter(get_remote_address, app=app)
 
@@ -18,9 +16,17 @@ def create_app():
             'error': 'Too many requests. Please try again later.',
         }), 429
 
+    @app.route('/')
+    def index():  # type: ignore
+        return send_from_directory('dist', 'index.html')
+
     @app.route('/calculate', methods=['POST'])
-    @limiter.limit('4 per second; 400 per day') # 4 calculation types total
+    # All requests arrive locally (not divided by user)
+    @limiter.limit('40 per second; 400 per hour')
     def _calculate():  # type: ignore
+        if request.remote_addr not in ["127.0.0.1", "::1"]:
+            abort(403, description="Forbidden: Only local requests allowed")
+
         data = request.get_json()
         calc_type = data.get('type')
 

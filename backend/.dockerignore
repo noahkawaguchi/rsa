@@ -1,0 +1,24 @@
+# Environment files and virtual environment
+.env
+.env.*
+venv/
+
+# Version control
+.git
+.gitignore
+
+# Editor/IDE/OS
+.vscode/
+.vscode/*
+.DS_Store
+
+# Python caches and logs
+__pycache__/
+*.pyc
+*.pyo
+*.log
+.pytest_cache
+.mypy_cache
+
+# Tests
+tests/
