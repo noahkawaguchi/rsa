@@ -43,14 +43,47 @@ describe('Decode', () => {
     });
   });
 
-  it('should show an alert for invalid input', async () => {
+  it('should reject non-numeric input', async () => {
     window.alert = jest.fn();
     render(<Decode n={54} d={3} />);
     const user = userEvent.setup();
     await user.type(screen.getByLabelText(/Enter the/), 'invalid, input, here');
     await user.click(screen.getByText('Decode'));
     expect(window.alert).toHaveBeenCalledWith(
-      'Invalid input. Please enter a comma-separated list of integers like the example.'
+      'Invalid input. Please enter a comma-separated list of numbers like the example.'
+    );
+  });
+
+  it('should reject floating point numbers', async () => {
+    window.alert = jest.fn();
+    render(<Decode n={54} d={3} />);
+    const user = userEvent.setup();
+    await user.type(screen.getByLabelText(/Enter the/), '5, 225, 25.9');
+    await user.click(screen.getByText('Decode'));
+    expect(window.alert).toHaveBeenCalledWith(
+      'Invalid input. All numbers must be positive integers less than 9 million.'
+    );
+  });
+
+  it('should reject negative numbers', async () => {
+    window.alert = jest.fn();
+    render(<Decode n={54} d={3} />);
+    const user = userEvent.setup();
+    await user.type(screen.getByLabelText(/Enter the/), '1, -10, 254');
+    await user.click(screen.getByText('Decode'));
+    expect(window.alert).toHaveBeenCalledWith(
+      'Invalid input. All numbers must be positive integers less than 9 million.'
+    );
+  });
+
+  it('should reject numbers >= 9 million', async () => {
+    window.alert = jest.fn();
+    render(<Decode n={54} d={3} />);
+    const user = userEvent.setup();
+    await user.type(screen.getByLabelText(/Enter the/), '1, 2, 9000005');
+    await user.click(screen.getByText('Decode'));
+    expect(window.alert).toHaveBeenCalledWith(
+      'Invalid input. All numbers must be positive integers less than 9 million.'
     );
   });
 });

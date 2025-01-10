@@ -1,25 +1,28 @@
 from typing import Any
 import pytest
 from app.calculations.utils import (
-    pos_int_required_field, pos_int_list_required_field,
+    constrained_int_required_field, constrained_int_list_required_field,
     convert_text, convert_num, generate_primes
 )
 
 
 @pytest.mark.parametrize(
     'value, expected_exception',
-    [(None, KeyError), ('hello', TypeError), (-2, ValueError), (10, None)],
+    [(None, KeyError), ('hello', TypeError), 
+     (-2, ValueError), (10, None), (9000001, ValueError)],
     ids=['None raises KeyError', '"hello" raises TypeError',
-         '-2 raises ValueError', '10 does not raise an exception'],
+         '-2 raises ValueError', '10 does not raise an exception',
+         '9000001 raises ValueError'],
 )
-def test_pos_int_required_field(value: Any,
-                                expected_exception: type[Exception]):
+def test_constrained_int_required_field(value: Any,
+                                        expected_exception: type[Exception]):
     if expected_exception:
         with pytest.raises(expected_exception):
-            pos_int_required_field(value, 'field', 'calc')
+            constrained_int_required_field(value, 'field', 'calc')
     else:
         # Should not raise an exception
-        assert isinstance(pos_int_required_field(value, 'field', 'calc'), int)
+        assert isinstance(constrained_int_required_field(
+            value, 'field', 'calc'), int)
 
 
 @pytest.mark.parametrize(
@@ -32,15 +35,17 @@ def test_pos_int_required_field(value: Any,
          'negative element raises ValueError',
          'valid list does not raise an exception'],
 )
-def test_pos_int_list_required_field(candidate: Any,
-                                     expected_exception: type[Exception]):
+def test_constrained_int_list_required_field(
+    candidate: Any, expected_exception: type[Exception]
+):
     if expected_exception:
         with pytest.raises(expected_exception):
-            pos_int_list_required_field(candidate, 'field', 'calc')
+            constrained_int_list_required_field(candidate, 'field', 'calc')
     else:
         # Should not raise an exception
         assert isinstance(
-            pos_int_list_required_field(candidate, 'field', 'calc'), list
+            constrained_int_list_required_field(
+                candidate, 'field', 'calc'), list
         )
 
 

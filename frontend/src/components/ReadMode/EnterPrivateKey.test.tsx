@@ -7,13 +7,13 @@ describe('EnterPrivateKey', () => {
   it('should display the form before user submission and the keys after', async () => {
     render(<EnterPrivateKey updatePrivateKey={jest.fn()} />);
     const user = userEvent.setup();
-    expect(screen.queryByText("your private key")).toBeInTheDocument();
+    expect(screen.queryByText('your private key')).toBeInTheDocument();
     expect(screen.queryByText('d: 123')).not.toBeInTheDocument();
     expect(screen.queryByText('n: 456')).not.toBeInTheDocument();
     await user.type(screen.getByLabelText('d:'), '123');
     await user.type(screen.getByLabelText('n:'), '456');
     await user.click(screen.getByText('Submit'));
-    expect(screen.queryByText("your private key")).not.toBeInTheDocument();
+    expect(screen.queryByText('your private key')).not.toBeInTheDocument();
     expect(screen.queryByText('d: 123')).toBeInTheDocument();
     expect(screen.queryByText('n: 456')).toBeInTheDocument();
   });
@@ -21,23 +21,23 @@ describe('EnterPrivateKey', () => {
   it('should ensure both d and n are entered', async () => {
     render(<EnterPrivateKey updatePrivateKey={jest.fn()} />);
     const user = userEvent.setup();
-    expect(screen.queryByText("your private key")).toBeInTheDocument();
+    expect(screen.queryByText('your private key')).toBeInTheDocument();
     await user.type(screen.getByLabelText('d:'), '789');
     await user.click(screen.getByText('Submit'));
-    expect(screen.queryByText("your private key")).toBeInTheDocument();
+    expect(screen.queryByText('your private key')).toBeInTheDocument();
     await user.clear(screen.getByLabelText('d:'));
     await user.type(screen.getByLabelText('n:'), '101');
     await user.click(screen.getByText('Submit'));
-    expect(screen.queryByText("your private key")).toBeInTheDocument();
+    expect(screen.queryByText('your private key')).toBeInTheDocument();
     await user.type(screen.getByLabelText('d:'), '789');
     await user.click(screen.getByText('Submit'));
-    expect(screen.queryByText("your private key")).not.toBeInTheDocument();
+    expect(screen.queryByText('your private key')).not.toBeInTheDocument();
   });
 
-  it('should reject inputs that are not positive integers', async () => {
+  it('should reject inputs that are not positive integers under 9 million', async () => {
     render(<EnterPrivateKey updatePrivateKey={jest.fn()} />);
     const user = userEvent.setup();
-    const enterKey = screen.queryByText("your private key");
+    const enterKey = screen.queryByText('your private key');
     const dInput = screen.getByLabelText('d:');
     const nInput = screen.getByLabelText('n:');
     const submit = screen.getByText('Submit');
@@ -60,6 +60,14 @@ describe('EnterPrivateKey', () => {
     await user.type(dInput, '2.5');
     await user.click(nInput);
     await user.paste('6.09');
+    await user.click(submit);
+    expect(enterKey).toBeInTheDocument();
+
+    await user.clear(dInput);
+    await user.clear(nInput);
+    await user.type(dInput, '255251');
+    await user.click(nInput);
+    await user.paste('9000009');
     await user.click(submit);
     expect(enterKey).toBeInTheDocument();
 

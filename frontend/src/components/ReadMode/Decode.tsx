@@ -3,11 +3,11 @@ import { PrivateKey } from '../../types';
 import { useBackendCalculation } from '../../hooks/useBackendCalculation';
 
 /**
- * Collects the ciphertext from the user, enforcing input of a valid list 
+ * Collects the ciphertext from the user, enforcing input of a valid list
  * of integers, and then retrieves and displays the plaintext.
  * @param n - The first half of the user's private key.
  * @param d - The second half of the user's private key.
- * @returns A controlled input for the ciphertext if the user has not submitted 
+ * @returns A controlled input for the ciphertext if the user has not submitted
  *          it yet, or a box displaying the plaintext if they have.
  */
 const Decode: React.FC<PrivateKey> = ({ n, d }) => {
@@ -18,12 +18,19 @@ const Decode: React.FC<PrivateKey> = ({ n, d }) => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const elements = ciphertext.split(',').map((item) => item.trim());
-    const isValid = elements.every((item) => !isNaN(Number(item)) && item !== '');
-    if (!isValid) {
-      alert('Invalid input. Please enter a comma-separated list of integers like the example.');
+    const allNumbers = elements.every((item) => !isNaN(Number(item)) && item !== '');
+    if (!allNumbers) {
+      alert('Invalid input. Please enter a comma-separated list of numbers like the example.');
       return;
     }
     const parsedArray = elements.map(Number);
+    const allValidInts = parsedArray.every(
+      (item) => Number.isInteger(item) && item > 0 && item < 9000000
+    );
+    if (!allValidInts) {
+      alert('Invalid input. All numbers must be positive integers less than 9 million.');
+      return;
+    }
     await requestCalculation({ type: 'decode', n: n, d: d, ciphertext: parsedArray });
     setSubmitted(true);
   };

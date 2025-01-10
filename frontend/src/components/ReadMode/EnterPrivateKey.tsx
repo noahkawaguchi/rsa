@@ -48,6 +48,7 @@ const EnterPrivateKey: React.FC<EnterPrivateKeyProps> = ({ updatePrivateKey }) =
             id='private-n-input'
             type='number'
             min={1}
+            max={8999999}
             placeholder='enter n...'
             inputMode='numeric'
             onChange={handleNChange}
@@ -59,6 +60,7 @@ const EnterPrivateKey: React.FC<EnterPrivateKeyProps> = ({ updatePrivateKey }) =
             id='private-d-input'
             type='number'
             min={1}
+            max={8999999}
             placeholder='enter d...'
             inputMode='numeric'
             onChange={handleDChange}

@@ -2,9 +2,10 @@ from typing import Any
 from random import sample
 
 
-def pos_int_required_field(value: Any, field_name: str, calc_type: str) -> int:
-    """Raise an error if value is None or is not a positive integer. 
-    Otherwise, return the validated value.
+def constrained_int_required_field(value: Any, field_name: str,
+                                   calc_type: str) -> int:
+    """Raise an error if value is None or is not a positive integer 
+    less than 9 million. Otherwise, return the validated value.
     """
     if value is None:
         raise KeyError(f'{field_name} is required '
@@ -14,13 +15,17 @@ def pos_int_required_field(value: Any, field_name: str, calc_type: str) -> int:
                         f'got {type(value).__name__}')
     if value <= 0:
         raise ValueError(f'{field_name} must be positive, got {value}')
+    if value > 8999999:
+        raise ValueError(
+            f'{field_name} must be less than 9000000, got {value}')
     return value
 
 
-def pos_int_list_required_field(candidate: Any, field_name: str,
-                                calc_type: str) -> list[int]:
+def constrained_int_list_required_field(candidate: Any, field_name: str,
+                                        calc_type: str) -> list[int]:
     """Raise an error if candidate is None or is not a list (array) of 
-    positive integers. Otherwise, return the validated list. 
+    positive integers less than 9 million. Otherwise, return the 
+    validated list. 
     """
     if candidate is None:
         raise KeyError(f'{field_name} is required for '
@@ -31,8 +36,9 @@ def pos_int_list_required_field(candidate: Any, field_name: str,
                         f'got {type(candidate).__name__}')
     else:
         list_of_any = candidate
-    return [pos_int_required_field(elem, f'element in {field_name} list',
-                                   f'{calc_type}') for elem in list_of_any]
+    return [constrained_int_required_field(
+        elem, f'element in {field_name} list', f'{calc_type}'
+    ) for elem in list_of_any]
 
 
 def convert_text(_string: str) -> list[int]:

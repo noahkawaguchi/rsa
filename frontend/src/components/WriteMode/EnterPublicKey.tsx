@@ -48,6 +48,7 @@ const EnterPublicKey: React.FC<EnterPublicKeyProps> = ({ updatePublicKey }) => {
             id='public-n-input'
             type='number'
             min={1}
+            max={8999999}
             placeholder='enter n...'
             inputMode='numeric'
             onChange={handleNChange}
@@ -59,6 +60,7 @@ const EnterPublicKey: React.FC<EnterPublicKeyProps> = ({ updatePublicKey }) => {
             id='public-e-input'
             type='number'
             min={1}
+            max={8999999}
             placeholder='enter e...'
             inputMode='numeric'
             onChange={handleEChange}

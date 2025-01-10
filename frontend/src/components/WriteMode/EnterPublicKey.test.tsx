@@ -34,7 +34,7 @@ describe('EnterPublicKey', () => {
     expect(screen.queryByText("recipient's public key")).not.toBeInTheDocument();
   });
 
-  it('should reject inputs that are not positive integers', async () => {
+  it('should reject inputs that are not positive integers under 9 million', async () => {
     render(<EnterPublicKey updatePublicKey={jest.fn()} />);
     const user = userEvent.setup();
     const enterKey = screen.queryByText("recipient's public key");
@@ -60,6 +60,14 @@ describe('EnterPublicKey', () => {
     await user.type(nInput, '2.5');
     await user.click(eInput);
     await user.paste('6.09');
+    await user.click(submit);
+    expect(enterKey).toBeInTheDocument();
+
+    await user.clear(eInput);
+    await user.clear(nInput);
+    await user.type(eInput, '255251');
+    await user.click(nInput);
+    await user.paste('9000009');
     await user.click(submit);
     expect(enterKey).toBeInTheDocument();
 
