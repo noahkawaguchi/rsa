@@ -43,3 +43,17 @@ def test_calculate_endpoint(mocker: MockerFixture, client: FlaskClient,
         assert error in data['error']
     else:
         assert data['result'] == result
+
+
+def test_too_many_requests(mocker: MockerFixture, client: FlaskClient) -> None:
+    mock_calculate = mocker.patch('app.calculate')
+    mock_calculate.return_value = {'returned': 'values'}
+    # 4 requests allowed per second
+    for _ in range(4):
+        response = client.post(
+            '/calculate', json={'type': 'valid request content'})
+        assert response.status_code == 200
+    response = client.post(
+        '/calculate', json={'type': 'valid request content'})
+    assert response.status_code == 429
+    assert 'Too many requests' in response.get_json()['error']
