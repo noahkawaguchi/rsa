@@ -15,7 +15,7 @@ describe('GenerateKeys', () => {
   it('should retrieve keys upon render', async () => {
     mockedAxios.post.mockResolvedValueOnce({ data: { result: 'hello' } });
     await act(async () => render(<GenerateKeys p={19} q={23} />));
-    expect(mockedAxios.post).toHaveBeenCalledWith('/calculate', {
+    expect(mockedAxios.post).toHaveBeenCalledWith('http://127.0.0.1:5000/calculate', {
       type: 'keys',
       p: 19,
       q: 23,

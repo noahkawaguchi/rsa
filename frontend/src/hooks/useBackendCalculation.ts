@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import axios from 'axios';
 import { CalculationRequest, CalculationResponse } from '../types';
+import { getApiUrl } from '../config';
 
 /**
  * Custom hook that handles API requests.
@@ -27,7 +28,7 @@ export const useBackendCalculation = () => {
     async (request: CalculationRequest, callback?: (data: CalculationResponse) => void) => {
       setLoading(true);
       axios
-        .post<CalculationResponse>('/calculate', request)
+        .post<CalculationResponse>(`${getApiUrl()}/calculate`, request)
         .then((response) => {
           if (response.data) {
             setData(response.data);

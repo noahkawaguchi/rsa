@@ -1,9 +1,11 @@
 from typing import Any, Generator
+from dotenv import load_dotenv
 import pytest
 from pytest_mock import MockerFixture
 from flask.testing import FlaskClient
 from app import create_app
 
+load_dotenv()
 
 @pytest.fixture
 def client() -> Generator[FlaskClient]:
@@ -11,12 +13,6 @@ def client() -> Generator[FlaskClient]:
     app.config['TESTING'] = True
     with app.test_client() as client:
         yield client
-
-
-def test_index(client: FlaskClient) -> None:
-    response = client.get('/')
-    assert response.status_code == 200
-    assert b'<div id="root"></div>' in response.data
 
 
 @pytest.mark.parametrize(
@@ -54,8 +50,8 @@ def test_calculate_endpoint(mocker: MockerFixture, client: FlaskClient,
 def test_too_many_requests(mocker: MockerFixture, client: FlaskClient) -> None:
     mock_calculate = mocker.patch('app.calculate')
     mock_calculate.return_value = {'returned': 'values'}
-    # 40 requests allowed per second
-    for _ in range(40):
+    # 4 requests allowed per second
+    for _ in range(4):
         response = client.post(
             '/calculate', json={'type': 'valid request content'})
         assert response.status_code == 200

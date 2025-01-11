@@ -1,22 +1,13 @@
 # RSA Public Key Encryption
 
-This simple web app guides the user through the steps of RSA public key encryption. Namely, they can generate primes, generate keys, encode messages, and decode messages. The RSA calculations are done "by hand" in the backend and do not use values large enough for genuinely secure encryption, so the app is meant for entertainment and informational purposes only.
+### 🔗 [Live link here](https://rsa.fly.dev)
 
-### Backend
+This simple web app guides the user through the steps of RSA public key encryption ([Wikipedia link](https://en.wikipedia.org/wiki/RSA_(cryptosystem))).  Namely, they can generate primes, generate keys, encode messages, and decode messages. The RSA calculations are done "by hand" in the backend and do not use values large enough for genuinely secure encryption, so the app is meant for entertainment and informational purposes only. 
 
-- Python
-- Flask
-- Mypy
-- Pytest
+**Backend:** Python/Flask/Mypy
 
-### Frontend
+**Frontend:** TypeScript/React/Vite
 
-- TypeScript
-- React
-- Vite
-- Jest
-- React Testing Library
+**Testing:** Pytest, Jest, React Testing Library
 
-### Background Information
-
-- The [Wikipedia page](<https://en.wikipedia.org/wiki/RSA_(cryptosystem)>) on the RSA cryptosystem
+**Deployment:** Fly.io, GitHub Pages
