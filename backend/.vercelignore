@@ -1,6 +1,3 @@
-fly.toml
-.envrc
-
 # Environment files and virtual environment
 .env
 .env.*

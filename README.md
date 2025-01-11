@@ -10,4 +10,4 @@ This simple web app guides the user through the steps of RSA public key encrypti
 
 **Testing:** Pytest, Jest, React Testing Library
 
-**Deployment:** Fly.io, GitHub Pages
+**Deployment:** Vercel, GitHub Pages
