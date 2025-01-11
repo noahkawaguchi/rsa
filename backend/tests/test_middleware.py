@@ -26,10 +26,12 @@ def client(app: Flask) -> Generator[FlaskClient]:
         ('http://allowed.com', None, 200),
         ('http://notallowed.com', None, 403),
         (None, 'http://allowed.com/page', 200),
-        (None, 'http://notallowed.com/page', 403)
+        (None, 'http://notallowed.com/page', 403),
+        (None, None, 403),
     ],
     ids=['allowed origin', 'not allowed origin',
-         'allowed referrer', 'not allowed referrer'],
+         'allowed referrer', 'not allowed referrer',
+         'no origin or referrer'],
 )
 def test_origin_and_referrer(client: FlaskClient, origin: str, referrer: str,
                              status_code: int) -> None:

@@ -42,7 +42,10 @@ def create_app() -> Flask:
         origin = request.headers.get('Origin')
         # It's really spelled "referer" in the header
         referrer = request.headers.get('Referer')
-        if origin and origin not in allowed_origins_list:
+        # Require at least one of origin or referrer to be set
+        if not origin and not referrer:
+            abort(403, description='Forbidden')
+        if origin and normalize_origin(origin) not in allowed_origins_list:
             abort(403, description='Forbidden')
         if referrer:
             referrer_origin = normalize_origin(referrer)

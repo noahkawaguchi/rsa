@@ -1,14 +1,23 @@
 from typing import Any, Generator
-from dotenv import load_dotenv
 import pytest
 from pytest_mock import MockerFixture
+from flask import Flask
 from flask.testing import FlaskClient
 from app import create_app
 
-load_dotenv()
+headers = {'Origin': 'http://allowed.com',
+           'Referer': 'http://allowed.com/page'}
+
 
 @pytest.fixture
-def client() -> Generator[FlaskClient]:
+def app(monkeypatch: pytest.MonkeyPatch) -> Flask:
+    monkeypatch.setenv('ALLOWED_ORIGINS', 'http://allowed.com')
+    from app import create_app
+    return create_app()
+
+
+@pytest.fixture
+def client(app: Flask) -> Generator[FlaskClient]:
     app = create_app()
     app.config['TESTING'] = True
     with app.test_client() as client:
@@ -38,7 +47,7 @@ def test_calculate_endpoint(mocker: MockerFixture, client: FlaskClient,
         mock_calculate.return_value = result
 
     # Make a mock POST request
-    response = client.post('/calculate', json=payload)
+    response = client.post('/calculate', json=payload, headers=headers)
     data = response.get_json()
     assert response.status_code == status_code
     if error:
@@ -53,9 +62,10 @@ def test_too_many_requests(mocker: MockerFixture, client: FlaskClient) -> None:
     # 4 requests allowed per second
     for _ in range(4):
         response = client.post(
-            '/calculate', json={'type': 'valid request content'})
+            '/calculate', json={'type': 'valid request content'},
+            headers=headers)
         assert response.status_code == 200
     response = client.post(
-        '/calculate', json={'type': 'valid request content'})
+        '/calculate', json={'type': 'valid request content'}, headers=headers)
     assert response.status_code == 429
     assert 'Too many requests' in response.get_json()['error']
