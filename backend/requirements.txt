@@ -1,9 +1,15 @@
-blinker==1.9.0
-click==8.1.8
-deprecated==1.2.15
+# Only production dependencies are listed here.
+# For development, see pyproject.toml (Poetry).
+
+# Primary dependencies
 flask==3.1.0
 flask-cors==5.0.0
 flask-limiter==3.10.0
+
+# Secondary dependencies
+blinker==1.9.0
+click==8.1.8
+deprecated==1.2.15
 itsdangerous==2.2.0
 jinja2==3.1.5
 limits==4.0.0
