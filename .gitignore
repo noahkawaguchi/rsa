@@ -31,9 +31,10 @@ __pycache__/
 .pytest_cache
 .mypy_cache
 
-# Vite/build caches
+# Build and deployment caches
 .vite/
 tsconfig.tsbuildinfo
+.vercel
 
 # Environments
 venv/

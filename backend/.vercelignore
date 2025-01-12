@@ -1,6 +1,10 @@
-# Environment files and virtual environment
+# Environment files
 .env
 .env.*
+
+# Package management and virtual environments
+poetry.lock
+pyproject.toml
 venv/
 .venv/
 
@@ -8,18 +12,21 @@ venv/
 .git
 .gitignore
 
-# Editor/IDE/OS
+# IDE/OS
 .vscode/
 .vscode/*
 .DS_Store
 
-# Python caches and logs
+# Local caches and logs
 __pycache__/
 *.pyc
 *.pyo
 *.log
 .pytest_cache
 .mypy_cache
+.vercel
 
 # Tests
+tests
 tests/
+tests/*
