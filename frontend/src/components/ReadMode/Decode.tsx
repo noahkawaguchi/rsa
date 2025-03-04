@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { PrivateKey } from '../../types';
+import { DecodeRequest, DecodeResponse, PrivateKey } from '../../types';
 import { useBackendCalculation } from '../../hooks/useBackendCalculation';
 
 /**
@@ -13,7 +13,10 @@ import { useBackendCalculation } from '../../hooks/useBackendCalculation';
 const Decode: React.FC<PrivateKey> = ({ n, d }) => {
   const [ciphertext, setCiphertext] = useState('');
   const [submitted, setSubmitted] = useState(false);
-  const { data, error, loading, requestCalculation } = useBackendCalculation();
+  const { data, error, loading, requestCalculation } = useBackendCalculation<
+    DecodeRequest,
+    DecodeResponse
+  >();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -25,7 +28,7 @@ const Decode: React.FC<PrivateKey> = ({ n, d }) => {
     }
     const parsedArray = elements.map(Number);
     const allValidInts = parsedArray.every(
-      (item) => Number.isInteger(item) && item > 0 && item < 9000000
+      (item) => Number.isInteger(item) && item > 0 && item < 9000000,
     );
     if (!allValidInts) {
       alert('Invalid input. All numbers must be positive integers less than 9 million.');
@@ -70,7 +73,6 @@ const Decode: React.FC<PrivateKey> = ({ n, d }) => {
         </form>
       ) : (
         data &&
-        data.type === 'decode' &&
         data.result && (
           <div>
             <p>

@@ -2,8 +2,8 @@ import axios from 'axios';
 import '@testing-library/jest-dom/';
 import { render, screen, waitFor } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
-import { CalculationRequest } from '../../types';
 import ReceiveMessage from './ReceiveMessage';
+import { PrimesRequest } from '../../types';
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
@@ -14,7 +14,7 @@ describe('ReceiveMessage', () => {
 
   it('should show GenerateKeys only after the user has generated primes', async () => {
     mockedAxios.post.mockImplementation((_: string, data?: unknown) => {
-      const requestData = data as CalculationRequest;
+      const requestData = data as PrimesRequest;
       if (requestData.type === 'primes') {
         return Promise.resolve({ data: { type: 'primes', result: { p: 3, q: 5 } } });
       } else if (requestData.type === 'keys') {

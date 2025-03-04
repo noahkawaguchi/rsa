@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { useBackendCalculation } from '../../hooks/useBackendCalculation';
-import { Primes } from '../../types';
+import { KeysRequest, KeysResponse, Primes } from '../../types';
 
 /**
- * Retrieves and displays the public key (n, e) and private key 
+ * Retrieves and displays the public key (n, e) and private key
  * (n, d) based on previously generated primes p and q.
  * @param p - The first prime.
  * @param q - The second prime.
- * @returns An interface that explains public and private keys and then 
+ * @returns An interface that explains public and private keys and then
  *          displays them once the user clicks the generate button.
  */
 const GenerateKeys: React.FC<Primes> = ({ p, q }) => {
   const [buttonClicked, setButtonClicked] = useState(false);
-  const { data, error, loading, requestCalculation } = useBackendCalculation();
+  const { data, error, loading, requestCalculation } = useBackendCalculation<
+    KeysRequest,
+    KeysResponse
+  >();
 
   useEffect(() => {
     requestCalculation({ type: 'keys', p: p, q: q });
@@ -31,7 +34,6 @@ const GenerateKeys: React.FC<Primes> = ({ p, q }) => {
         Generate Keys
       </h4>
       {data &&
-        data.type === 'keys' &&
         data.result &&
         (!buttonClicked ? (
           <div>

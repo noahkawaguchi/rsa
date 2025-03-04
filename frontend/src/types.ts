@@ -54,6 +54,3 @@ export interface DecodeResponse {
   result?: { plaintext: string };
   error?: string;
 }
-
-export type CalculationRequest = PrimesRequest | KeysRequest | EncodeRequest | DecodeRequest;
-export type CalculationResponse = PrimesResponse | KeysResponse | EncodeResponse | DecodeResponse;

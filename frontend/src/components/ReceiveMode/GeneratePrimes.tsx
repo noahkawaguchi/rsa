@@ -1,14 +1,14 @@
 import React from 'react';
 import { useState } from 'react';
 import { useBackendCalculation } from '../../hooks/useBackendCalculation';
-import { Primes } from '../../types';
+import { Primes, PrimesRequest, PrimesResponse } from '../../types';
 
 interface GeneratePrimesProps {
   updatePrimes(primes: Primes): void;
 }
 
 /**
- * Retrieves and displays a random pair of primes depending 
+ * Retrieves and displays a random pair of primes depending
  * on the user's choice of ASCII or Unicode.
  * @param updatePrimes - A function to inform the parent of the retrieved primes.
  * @returns An interface asking for the user's choice of ASCII or Unicode if they
@@ -16,11 +16,14 @@ interface GeneratePrimesProps {
  */
 const GeneratePrimes: React.FC<GeneratePrimesProps> = ({ updatePrimes }) => {
   const [hasChosen, setHasChosen] = useState(false);
-  const { data, error, loading, requestCalculation } = useBackendCalculation();
+  const { data, error, loading, requestCalculation } = useBackendCalculation<
+    PrimesRequest,
+    PrimesResponse
+  >();
 
   const unicodeChoice = async (choice: 'ascii' | 'unicode') => {
     await requestCalculation({ type: 'primes', choice: choice }, (data) => {
-      if (data.type === 'primes' && data.result) {
+      if (data.result) {
         updatePrimes({ p: data.result.p, q: data.result.q });
       }
     });
@@ -44,11 +47,12 @@ const GeneratePrimes: React.FC<GeneratePrimesProps> = ({ updatePrimes }) => {
           </p>
           <button onClick={() => unicodeChoice('ascii')}>ASCII only</button>
           <button onClick={() => unicodeChoice('unicode')}>Unicode symbols</button>
-          <p>(If you're unsure, choose <span className='bold-gold'>Unicode</span>.)</p>
+          <p>
+            (If you're unsure, choose <span className='bold-gold'>Unicode</span>.)
+          </p>
         </div>
       ) : (
         data &&
-        data.type === 'primes' &&
         data.result && (
           <p>
             Your primes p and q are <span className='bold-gold'>{data.result.p}</span> and{' '}
